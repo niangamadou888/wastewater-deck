@@ -225,9 +225,11 @@ test('readSiteUrlSetting: a malformed config file fails the build with the file 
   });
 });
 
-test('deck.config.json: ships with no site URL, so the build stays fully relocatable (portfolio concept, not yet deployed)', async () => {
+test('deck.config.json: site URL is empty (relocatable build) or an absolute https URL ending in a slash', async () => {
   const config = JSON.parse(await readFile(path.join(PROJECT_ROOT, 'deck.config.json'), 'utf8'));
-  assert.equal(resolveSiteUrl(undefined, config.siteUrl), '');
+  const siteUrl = resolveSiteUrl(undefined, config.siteUrl);
+  if (siteUrl === '') return;
+  assert.match(siteUrl, /^https:\/\/[^\s/]+\.[^\s/]+\/$/);
 });
 
 test('deck.config.json: holds only the site URL setting, so no brand or contact detail can ride along in it', async () => {
