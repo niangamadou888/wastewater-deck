@@ -1,0 +1,93 @@
+/* Drawing layer contract. Every schematic is an inline <svg class="dwg"> using these classes
+   and the shared defs in src/drawings/_defs.svg (hatch patterns, markers). viewBox width 640.
+   Groups that a legend can isolate carry data-layer="<name>". */
+
+.dwg-defs {
+  position: absolute;
+  width: 0;
+  height: 0;
+  overflow: hidden;
+}
+
+svg.dwg {
+  display: block;
+  width: 100%;
+  height: auto;
+  overflow: visible;
+  font-family: var(--font-data);
+}
+
+/* structure */
+.dwg .ly-wall { fill: none; stroke: var(--ink); stroke-width: 2; stroke-linejoin: round; }
+.dwg .ly-wall-hatch { fill: url(#hatch-ansi31); stroke: none; }
+.dwg .ly-ground { fill: none; stroke: var(--ink); stroke-width: 1.5; }
+.dwg .ly-soil { fill: url(#hatch-soil); stroke: none; }
+.dwg .ly-sand { fill: url(#hatch-sand); stroke: none; }
+.dwg .ly-concrete { fill: url(#hatch-concrete); stroke: var(--ink-2); stroke-width: 1; }
+.dwg .ly-media { fill: url(#hatch-media); stroke: var(--ink-2); stroke-width: 1; }
+.dwg .ly-steel { fill: none; stroke: var(--ink); stroke-width: 2.5; stroke-linecap: round; }
+.dwg .ly-hidden { fill: none; stroke: var(--ink-2); stroke-width: 1; stroke-dasharray: 6 4; }
+.dwg .ly-center { fill: none; stroke: var(--red); stroke-width: 1; stroke-dasharray: 14 4 2 4; }
+.dwg .ly-invert { fill: var(--red); stroke: none; }
+/* ground-coloured fill that hides hatching behind a pipe bore, a neck or the tank body */
+.dwg .ly-knockout { fill: var(--ms-ground); stroke: none; }
+
+/* water and flow (the only things that move) */
+.dwg .ly-water { fill: var(--yellow); fill-opacity: 0.06; stroke: none; }
+.dwg .ly-waterline { fill: none; stroke: var(--yellow); stroke-width: 1.25; stroke-dasharray: 12 4 2 4; }
+.dwg .ly-flow {
+  fill: none;
+  stroke: var(--yellow);
+  stroke-width: 2;
+  stroke-linecap: round;
+  stroke-dasharray: 6 8;
+  marker-end: url(#mk-flow);
+}
+.dwg .ly-air { fill: none; stroke: var(--ink); stroke-width: 1.25; stroke-linecap: round; stroke-dasharray: 1 6; }
+
+/* annotation */
+.dwg .ly-dim { fill: none; stroke: var(--cyan); stroke-width: 1; marker-start: url(#mk-tick); marker-end: url(#mk-tick); }
+.dwg .ly-dim-ext { fill: none; stroke: var(--cyan); stroke-width: 0.75; opacity: 0.7; }
+.dwg .ly-dim-text { fill: var(--cyan); font-size: 14px; font-weight: 700; letter-spacing: 0.02em; }
+.dwg .ly-leader { fill: none; stroke: var(--ink-2); stroke-width: 1; marker-end: url(#mk-dot); }
+.dwg .ly-label-long { fill: var(--ink); font-size: 14px; letter-spacing: 0.04em; }
+.dwg .ly-note { fill: var(--ink-2); font-size: 12px; letter-spacing: 0.04em; }
+/* A ground-coloured halo behind every drawing label: where a label meets hatching or a line,
+   the line breaks around the text instead of striking it through (drafting convention). */
+.dwg :is(.ly-dim-text, .ly-label-long, .ly-note) {
+  paint-order: stroke;
+  stroke: var(--ms-ground);
+  stroke-width: 3px;
+  stroke-linejoin: round;
+}
+.dwg .ly-balloon circle { fill: var(--ms-ground); stroke: var(--ink); stroke-width: 1.25; }
+.dwg .ly-balloon text { fill: var(--ink); font-size: 15px; font-weight: 700; text-anchor: middle; dominant-baseline: central; }
+
+/* layer isolate: JS sets data-isolating on the svg and .is-isolated on matching [data-layer] groups */
+.dwg [data-layer] { transition: opacity 0.2s var(--ease-out); }
+.dwg[data-isolating] [data-layer]:not(.is-isolated) { opacity: 0.16; }
+/* a balloon carries its own data-layer, so it is the isolated element itself */
+.dwg [data-layer].is-isolated .ly-wall,
+.dwg [data-layer].is-isolated .ly-balloon circle,
+.dwg .ly-balloon.is-isolated circle { stroke: var(--cyan); }
+
+/* motion: water moves only on the active sheet, in the direction each path is drawn */
+@keyframes dwg-flow { to { stroke-dashoffset: -28; } }
+@keyframes dwg-air { to { stroke-dashoffset: 14; } }
+.slide.is-active .dwg .ly-flow { animation: dwg-flow 1.4s linear infinite; }
+.slide.is-active .dwg .ly-air { animation: dwg-air 1.1s linear infinite; }
+
+/* phones draw the 640 viewBox at about half size: balloons and dimension letters must stay near 12 CSS px */
+@media (max-width: 720px) {
+  .dwg .ly-label-long,
+  .dwg .ly-note { display: none; }
+  .dwg .ly-balloon circle { r: 19px; }
+  .dwg .ly-balloon text { font-size: 24px; }
+  .dwg .ly-dim-text { font-size: 22px; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .slide.is-active .dwg .ly-flow,
+  .slide.is-active .dwg .ly-air { animation: none; }
+  .dwg [data-layer] { transition: none; }
+}

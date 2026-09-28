@@ -1,0 +1,132 @@
+/* Sheet 08 — LT sewage treatment, 40-150 PE. Styles owned by this sheet's author only.
+   Typical LT section with its layer legend in the main region; key facts, the
+   power warning and the rental enquiry in the side column. */
+
+.sheet-08 .sheet-main {
+  gap: var(--s-4);
+}
+
+.sheet-08 .sheet-side {
+  gap: var(--s-5);
+}
+
+.sheet-08 .s08-figure.is-split {
+  grid-template-columns: minmax(0, 1fr) 13rem;
+  column-gap: var(--s-4);
+}
+
+.sheet-08 .s08-figure .legend {
+  gap: 6px;
+}
+
+.sheet-08 .s08-facts > div {
+  padding-block: 0.5rem;
+}
+
+/* Flow states: the water's path through the two chambers, read left to right
+   along a yellow flow line (yellow = water and flow only). */
+.sheet-08 .s08-flow {
+  display: grid;
+  grid-template-columns: repeat(5, minmax(0, 1fr));
+  gap: 0 var(--s-3);
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.sheet-08 .s08-flow li {
+  display: grid;
+  align-content: start;
+  gap: var(--s-1);
+  max-inline-size: none;
+}
+
+.sheet-08 .s08-arrow {
+  display: block;
+  inline-size: 100%;
+  block-size: 10px;
+  margin-block-end: var(--s-1);
+  overflow: visible;
+}
+
+.sheet-08 .s08-arrow line {
+  fill: none;
+  stroke: var(--yellow);
+  stroke-width: 2;
+  stroke-linecap: round;
+  stroke-dasharray: 6 8;
+  marker-end: url(#mk-flow);
+}
+
+.sheet-08 .s08-state {
+  color: var(--ink);
+  font-size: 0.75rem;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+}
+
+.sheet-08 .s08-text {
+  color: var(--ink-2);
+  font-size: 0.8125rem;
+  line-height: 1.4;
+}
+
+.sheet-08 .s08-actions .btn {
+  inline-size: 100%;
+  justify-content: flex-start;
+}
+
+@media (max-width: 1300px) and (min-width: 721px) {
+  .sheet-08 .s08-figure.is-split {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  .sheet-08 .s08-figure.is-split > .legend {
+    flex-direction: row;
+  }
+}
+
+/* Short laptop screens (1280 x 800, 1366 x 768): legend beside the section again
+   as the kit's slim 9.5rem column (components.css), so the section takes the width
+   and the section, flow states and caption fit one screen. */
+@media (min-width: 1101px) and (max-height: 820px) {
+  /* The section's column is capped by the screen height (640 x 422 drawing), so a
+     1366 x 768 sheet keeps its caption above the frame. */
+  .sheet-08 .s08-figure.is-split {
+    grid-template-columns: minmax(0, calc((100dvh - 27.3rem) * 640 / 422)) 9.5rem;
+    justify-content: start;
+  }
+
+  .sheet-08 .s08-figure.is-split > .legend {
+    flex-direction: column;
+    gap: 4px;
+  }
+}
+
+@media (max-width: 720px) {
+  .sheet-08 .s08-figure.is-split {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  .sheet-08 .s08-flow {
+    grid-template-columns: minmax(0, 1fr);
+    gap: var(--s-2);
+    padding-inline-start: var(--s-2);
+    border-inline-start: 2px dotted var(--yellow);
+  }
+
+  .sheet-08 .s08-flow li {
+    grid-template-columns: 6.5rem minmax(0, 1fr);
+    align-items: baseline;
+    gap: var(--s-3);
+  }
+
+  .sheet-08 .s08-arrow {
+    display: none;
+  }
+
+  .sheet-08 .s08-actions .btn {
+    justify-content: center;
+  }
+}

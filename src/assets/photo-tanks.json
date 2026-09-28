@@ -1,0 +1,50 @@
+{
+  "file": "src/assets/photo-tanks.webp",
+  "source_url": "https://commons.wikimedia.org/wiki/File:Japanese_septic_tank.jpg",
+  "original_url": "https://upload.wikimedia.org/wikipedia/commons/e/e4/Japanese_septic_tank.jpg",
+  "author": "Project Kei (User:Keita.Honda)",
+  "licence": "CC BY-SA 4.0",
+  "licence_url": "https://creativecommons.org/licenses/by-sa/4.0/",
+  "date_taken": "2020-05-28",
+  "changes": "Cropped to 16:9 (2400 x 1350 from x 160, y 10 of the 2560 x 2000 original), scaled to 1600 x 900, WebP q78. The deck grades it further in CSS. This derivative is shared under CC BY-SA 4.0.",
+  "caption": "Sample site photo: a fibreglass septic tank lifted into place on crane slings. Stand-in for Lintang Tankworks dispatch photos.",
+  "credit": "Photo: Project Kei, CC BY-SA 4.0, Wikimedia Commons (cropped)",
+  "alt": "A cream fibreglass septic tank hanging from steel crane slings in front of trees: three round access necks on top, a grey threaded inlet port on the end wall, a moulded flange around its middle and ribbed sides, with lifting lugs bolted to the flange.",
+  "width": 1600,
+  "height": 900,
+  "hotspots": {
+    "_note": "Approximate feature centres in the 1600 x 900 image (use viewBox 0 0 1600 900)",
+    "access_neck_1": [
+      510,
+      60
+    ],
+    "access_neck_2": [
+      905,
+      235
+    ],
+    "access_neck_3": [
+      1240,
+      360
+    ],
+    "inlet_port": [
+      305,
+      370
+    ],
+    "lifting_lug_left": [
+      1120,
+      650
+    ],
+    "lifting_lug_right": [
+      1480,
+      655
+    ],
+    "mid_flange": [
+      700,
+      668
+    ],
+    "ribbed_side": [
+      1300,
+      560
+    ]
+  }
+}

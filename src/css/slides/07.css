@@ -1,0 +1,183 @@
+/* Sheet 07 — FRP Bio-Filter, 8-30 PE. Styles owned by this sheet's author only.
+   Anchorage detail with its layer legend in the main region; the FRP schedule
+   and key facts in the side column above the title block. */
+
+.sheet-07 .sheet-main {
+  gap: var(--s-4);
+}
+
+.sheet-07 .sheet-side {
+  gap: var(--s-4);
+}
+
+/* Legend: nine layers, so the column rows sit a little closer. Its column
+   is wide enough that the 4:3 detail beside it, with the four-line lede
+   above, still fits a 1440 x 900 sheet. */
+.sheet-07 .s07-figure.is-split {
+  grid-template-columns: minmax(0, 1fr) 12.5rem;
+  column-gap: var(--s-4);
+}
+
+.sheet-07 .s07-figure .legend {
+  gap: 6px;
+}
+
+/* General notes: HTML, not SVG text, so they read at 11px or more at every size.
+   Above the phone breakpoint they sit in the detail's empty top-right corner,
+   the space the drawing leaves for them (x 340 to 640 of its 640-unit width). */
+.sheet-07 .s07-figure > svg.dwg {
+  grid-row: 1;
+  grid-column: 1;
+}
+
+.sheet-07 .s07-figure > .s07-notes {
+  grid-row: 1;
+  grid-column: 1;
+  align-self: start;
+  justify-self: end;
+  inline-size: 46.5%;
+  margin: 0;
+}
+
+.sheet-07 .s07-notes .notes-title { padding-block-end: var(--s-2); }
+.sheet-07 .s07-notes ol { gap: 3px; }
+
+.sheet-07 .s07-notes li {
+  max-inline-size: none;
+  font-size: var(--fs-label);
+  line-height: 1.35;
+}
+
+.sheet-07 .s07-figure .legend-item {
+  min-block-size: 40px;
+  font-size: 0.78125rem;
+}
+
+/* Schedule: tighter rows and cells so eight columns fit the side column and
+   seven models plus the key facts clear the title block. */
+.sheet-07 .s07-table tbody :is(th, td) {
+  padding-block: 0.5rem;
+}
+
+.sheet-07 .s07-table :is(thead th, .schedule-units > *, tbody th, tbody td) {
+  padding-inline: 0.375rem;
+}
+
+/* The side column wraps the caption, so the source line starts its own row;
+   the small top margin keeps the title's CAD underline clear of it. */
+.sheet-07 .s07-table caption small:not(.rows-units) {
+  margin: var(--s-1) 0 0;
+}
+
+/* The orientation glyph is the shared .orient (schedule.css); in the table
+   it stands alone, its word visually hidden. */
+.sheet-07 .s07-table .s-type .orient {
+  display: block;
+  margin: 0;
+}
+
+.sheet-07 .s07-key {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--s-2) var(--s-5);
+  margin-block-start: var(--s-3);
+  color: var(--ink-3);
+  font-size: var(--fs-micro);
+  letter-spacing: 0.02em;
+}
+
+.sheet-07 .s07-key span {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--s-2);
+}
+
+.sheet-07 .s07-facts > div {
+  padding-block: 0.4375rem;
+}
+
+/* Above the phone breakpoint the FRP schedule stays a table in the side
+   column: the table itself is narrow, so it opts out of the per-model rows
+   layout that .is-rows applies to narrow columns (schedule.css). */
+@media (min-width: 721px) {
+  .sheet-07 .s07-schedule .schedule-scroll {
+    container: none;
+  }
+}
+
+/* Tablets: the side column is about 370px, so the cells tighten to fit the
+   eight columns without sideways scrolling. */
+@media (min-width: 721px) and (max-width: 1240px) {
+  .sheet-07 .s07-table :is(thead th, .schedule-units > *, tbody th, tbody td) {
+    padding-inline: 0.25rem;
+  }
+
+  .sheet-07 .s07-table tbody td {
+    font-size: 0.75rem;
+  }
+}
+
+/* Between the tablet breakpoint and a full desktop the legend drops under the drawing. */
+@media (max-width: 1300px) and (min-width: 721px) {
+  .sheet-07 .s07-figure.is-split {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  .sheet-07 .s07-figure.is-split > .legend {
+    flex-direction: row;
+  }
+}
+
+/* Short laptop screens (1280 x 800, 1366 x 768): the legend goes back beside the
+   detail as the kit's slim 9.5rem column (components.css), where it costs width
+   instead of height: under the detail it would halve the drawing. The side column
+   tightens so the schedule and key facts clear the title block. */
+@media (min-width: 1101px) and (max-height: 820px) {
+  /* The detail's column is capped by the screen height (4:3 drawing), so a
+     1366 x 768 sheet keeps its caption above the frame; the notes size with it. */
+  .sheet-07 .s07-figure.is-split {
+    grid-template-columns: minmax(0, calc((100dvh - 24.25rem) * 4 / 3)) 9.5rem;
+    justify-content: start;
+  }
+
+  .sheet-07 .s07-figure.is-split > .legend {
+    flex-direction: column;
+    gap: 4px;
+  }
+
+  .sheet-07 .s07-figure .legend-item {
+    min-block-size: 36px;
+    font-size: 0.75rem;
+  }
+
+  .sheet-07 .sheet-side { gap: var(--s-4); }
+  .sheet-07 .s07-table tbody :is(th, td) { padding-block: 0.3125rem; }
+  .sheet-07 .s07-facts > div { padding-block: 0.3125rem; }
+}
+
+@media (max-width: 720px) {
+  .sheet-07 .s07-figure.is-split {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  /* Phones: the notes follow the detail as a block of their own. */
+  .sheet-07 .s07-figure > .s07-notes {
+    grid-row: auto;
+    justify-self: stretch;
+    inline-size: auto;
+  }
+
+  .sheet-07 .s07-notes li { font-size: 0.8125rem; }
+
+  .sheet-07 .s07-figure .legend-item {
+    min-block-size: var(--tap);
+  }
+}
+
+/* Phones: the schedule reads as per-model rows (schedule.css, .is-rows);
+   the glyph sits inline beside the model code. */
+@media (max-width: 720px) {
+  .sheet-07 .s07-table .s-type .orient {
+    display: inline-block;
+  }
+}

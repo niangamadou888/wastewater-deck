@@ -1,0 +1,108 @@
+/*
+ * engine.css — FUNCTIONAL rules only. No colours, no fonts, no visual
+ * design: this stylesheet exists so the deck behaves correctly (slide
+ * visibility, dialog basics, print stacking, reduced-motion guard). The
+ * design pass adds a separate stylesheet imported alongside this one.
+ */
+
+/* ---- Slide visibility -------------------------------------------------- */
+
+[data-deck] {
+  --deck-progress: 0;
+}
+
+.slide {
+  display: none;
+}
+
+.slide.is-active {
+  display: block;
+}
+
+/* ---- Dialog basics ------------------------------------------------------
+ * Native <dialog> already toggles visibility via the `open` attribute; this
+ * just guards browsers/engines that need an explicit rule and keeps closed
+ * dialogs out of layout entirely.
+ */
+
+dialog[data-menu],
+dialog[data-share] {
+  margin: auto;
+}
+
+dialog[data-menu]:not([open]),
+dialog[data-share]:not([open]) {
+  display: none;
+}
+
+/* ---- Fullscreen affordance ----------------------------------------------
+ * iOS Safari has no Fullscreen API; the engine marks the root instead of
+ * leaving a button that can never work.
+ */
+
+[data-fullscreen='unsupported'] [data-action='fullscreen'] {
+  display: none;
+}
+
+/* ---- Horizontally scrollable containers ----------------------------------
+ * Functional scaffolding for wide tables (e.g. the model comparison table)
+ * on narrow viewports. The touch layer treats these as no-swipe zones when
+ * they actually overflow, so content wider than the viewport can still be
+ * scrolled with a finger.
+ */
+
+[data-scroll-x] {
+  overflow-x: auto;
+}
+
+/* ---- Screen-reader-only live region --------------------------------------
+ * Functional accessibility utility, not a design choice: keeps the polite
+ * live region announcing slide changes out of the visual flow without
+ * removing it from the accessibility tree.
+ */
+
+[data-live] {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}
+
+/* ---- Print stacking -------------------------------------------------------
+ * On print every slide should be visible and stacked, chrome and dialogs
+ * are not printable.
+ */
+
+@media print {
+  .slide {
+    display: block !important;
+    break-after: page;
+  }
+
+  .slide:last-child {
+    break-after: auto;
+  }
+
+  [data-chrome],
+  dialog[data-menu],
+  dialog[data-share],
+  [data-live] {
+    display: none !important;
+  }
+}
+
+/* ---- Reduced motion guard ------------------------------------------------ */
+
+@media (prefers-reduced-motion: reduce) {
+  * {
+    animation-duration: 0.001ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.001ms !important;
+    scroll-behavior: auto !important;
+  }
+}

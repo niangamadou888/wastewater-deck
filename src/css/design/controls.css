@@ -1,0 +1,391 @@
+/* Interactive sheet controls: the selector, the recommendation result and the
+   two dialogs (sheet index, share). Same cell language as components.css. */
+
+/* ---- selector controls ----------------------------------------------------------------- */
+
+.selector {
+  display: grid;
+  gap: var(--s-6);
+  align-content: start;
+}
+
+.pe-field {
+  display: grid;
+  justify-items: start;
+  gap: var(--s-2);
+}
+
+.pe-label { margin-block-end: var(--s-2); }
+
+.pe-input {
+  position: relative;
+  display: inline-flex;
+  align-items: baseline;
+  gap: 0.5rem;
+  padding: 0 1.25rem 0.375rem;
+  border-bottom: 1px solid var(--cyan);
+}
+
+.pe-input input {
+  inline-size: 3.4ch;
+  min-inline-size: 2ch;
+  max-inline-size: 5ch;
+  field-sizing: content;
+  background: none;
+  color: var(--cyan);
+  font-family: var(--font-display);
+  font-size: clamp(3.5rem, 2.8rem + 3vw, 5.5rem);
+  font-weight: 700;
+  font-stretch: 72%;
+  line-height: 0.9;
+  text-align: end;
+  font-variant-numeric: tabular-nums lining-nums;
+  appearance: textfield;
+  -moz-appearance: textfield;
+  padding: 0.06em 0.1em 0;
+  border: 1px dashed transparent;
+  transition: border-color 0.2s var(--ease-out);
+}
+
+/* Empty: a dashed entry box and a "?" placeholder say where the PE goes. */
+.pe-input input:placeholder-shown { border-color: var(--ink-3); }
+.pe-input input::placeholder { color: var(--ink-3); opacity: 1; }
+
+.pe-input input::-webkit-inner-spin-button,
+.pe-input input::-webkit-outer-spin-button {
+  margin: 0;
+  -webkit-appearance: none;
+}
+
+.pe-input input:focus { outline: none; }
+.pe-input:focus-within { outline: 2px solid var(--cyan); outline-offset: 10px; }
+.pe-input:has([aria-invalid="true"]) { border-bottom-color: var(--red); }
+
+.pe-unit {
+  color: var(--cyan);
+  font-size: 1rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+}
+
+.pe-help { margin-block-start: var(--s-3); color: var(--ink-3); font-size: 0.75rem; }
+
+.toggles {
+  display: grid;
+  min-inline-size: 0;
+  margin: 0;
+  padding: 0;
+  border: 0;
+}
+
+.toggle {
+  position: relative;
+  display: grid;
+  grid-template-columns: 18px minmax(0, 1fr) auto;
+  align-items: center;
+  gap: 0.875rem;
+  min-block-size: var(--tap);
+  padding: 0.5rem 0.25rem;
+  border-bottom: 1px solid var(--line);
+  color: var(--ink-2);
+  font-size: 0.875rem;
+  line-height: 1.3;
+  cursor: pointer;
+  transition: color 0.2s var(--ease-out);
+}
+
+.toggle input {
+  position: absolute;
+  inline-size: 1px;
+  block-size: 1px;
+  margin: 0;
+  opacity: 0;
+}
+
+.toggle-box {
+  position: relative;
+  inline-size: 18px;
+  block-size: 18px;
+  border: 1.5px solid var(--ink-3);
+  transition: background-color 0.2s var(--ease-out), border-color 0.2s var(--ease-out);
+}
+
+.toggle-box::after {
+  content: "";
+  position: absolute;
+  top: 1px;
+  left: 4.5px;
+  inline-size: 5px;
+  block-size: 10px;
+  border: solid var(--ms-ground);
+  border-width: 0 2px 2px 0;
+  transform: rotate(45deg) scale(0);
+  transition: transform 0.2s var(--ease-out);
+}
+
+.toggle-state {
+  min-inline-size: 3ch;
+  color: var(--ink-3);
+  font-size: var(--fs-label);
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  text-align: end;
+}
+
+.toggle-state::after { content: "OFF"; }
+.toggle:hover { color: var(--ink); }
+.toggle:hover .toggle-box { border-color: var(--ink-2); }
+.toggle:has(input:checked) { color: var(--ink); }
+.toggle input:checked ~ .toggle-box { border-color: var(--cyan); background: var(--cyan); }
+.toggle input:checked ~ .toggle-box::after { transform: rotate(45deg) scale(1); }
+.toggle input:checked ~ .toggle-state { color: var(--cyan); }
+.toggle input:checked ~ .toggle-state::after { content: "ON"; }
+.toggle:has(input:focus-visible) { outline: 2px solid var(--cyan); outline-offset: 2px; }
+.toggle:has(input:disabled) { opacity: 0.45; cursor: not-allowed; }
+
+/* ---- recommendation result --------------------------------------------------------- */
+
+.result {
+  display: grid;
+  gap: var(--s-4);
+  padding: var(--s-5);
+  border: 1px solid var(--cyan);
+  background: var(--ms-ground);
+}
+
+.result-model {
+  margin: 0;
+  color: var(--cyan);
+  font-size: clamp(2.25rem, 1.6rem + 2.4vw, 3.5rem);
+  font-weight: 700;
+  font-stretch: 72%;
+  line-height: 0.95;
+  letter-spacing: -0.01em;
+}
+
+.result-series { color: var(--ink-2); font-size: 0.875rem; }
+
+.result-dims {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(6.5rem, 1fr));
+  margin: 0;
+  border-top: 1px solid var(--tb-rule);
+  border-left: 1px solid var(--tb-rule);
+}
+
+.result-dims > div {
+  padding: 0.5rem 0.625rem 0.5625rem;
+  border-right: 1px solid var(--tb-rule);
+  border-bottom: 1px solid var(--tb-rule);
+}
+
+.result-dims dt { margin-block-end: 4px; }
+.result-dims .sym {
+  margin-inline-end: 0.4em;
+  color: var(--cyan);
+  font-size: 0.6875rem;
+  font-weight: 700;
+  letter-spacing: 0.02em;
+  text-transform: none;
+}
+
+.result-dims dd { margin: 0; font-size: 1rem; font-weight: 700; white-space: nowrap; }
+.result-dims dd small { margin-inline-start: 2px; color: var(--ink-3); font-size: 0.6875rem; font-weight: 400; }
+
+.result-actions {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--s-3);
+}
+
+.result-disclaimer { color: var(--ink-3); font-size: 0.75rem; }
+
+.result.is-empty,
+.result:is([data-status="invalid"], [data-status="out-of-range"]) {
+  border-color: var(--line-2);
+}
+
+.result.is-empty { border-style: dashed; color: var(--ink-3); font-size: 0.875rem; }
+
+.warn {
+  display: flex;
+  align-items: flex-start;
+  gap: 0.625rem;
+  color: var(--ink);
+  font-size: 0.8125rem;
+  line-height: 1.45;
+}
+
+.warn::before {
+  content: "";
+  flex: none;
+  inline-size: 16px;
+  block-size: 14px;
+  margin-block-start: 0.12em;
+  background: var(--ico-delta) center / contain no-repeat;
+}
+
+/* ---- dialogs: sheet index and plot / share ----------------------------------------- */
+
+dialog[data-menu],
+dialog[data-share] {
+  inline-size: min(60rem, calc(100vw - 2 * var(--s-5)));
+  max-inline-size: none;
+  max-block-size: calc(100dvh - 2 * var(--s-5));
+  padding: 0;
+  overflow: auto;
+  overscroll-behavior: contain;
+  border: 1.5px solid var(--ink);
+  background: var(--ms-ground);
+  color: var(--ink);
+}
+
+dialog[data-share] { inline-size: min(46rem, calc(100vw - 2 * var(--s-5))); }
+
+dialog[data-menu][open],
+dialog[data-share][open] { animation: dlg-in 0.28s var(--ease-out); }
+
+@keyframes dlg-in { from { opacity: 0; transform: translateY(10px); } }
+
+:is(dialog[data-menu], dialog[data-share])::backdrop { background: rgb(12 15 20 / 0.84); }
+
+.dlg-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--s-4);
+  padding: var(--s-2) var(--s-2) var(--s-2) var(--s-5);
+  border-bottom: 1px solid var(--tb-rule);
+}
+
+.dlg-head h2 { margin: 0; font-size: clamp(1.5rem, 1.2rem + 1vw, 2rem); }
+
+.dlg-close {
+  display: grid;
+  flex: none;
+  place-items: center;
+  inline-size: var(--tap);
+  block-size: var(--tap);
+  border: 1px solid var(--tb-rule);
+  background: none;
+  color: var(--ink);
+  transition: border-color 0.2s var(--ease-out), color 0.2s var(--ease-out);
+}
+
+.dlg-close:hover { border-color: var(--cyan); color: var(--cyan); }
+
+.dlg-foot {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--s-2) var(--s-5);
+  padding: var(--s-3) var(--s-5);
+  border-top: 1px solid var(--tb-rule);
+  color: var(--ink-2);
+  font-size: var(--fs-micro);
+}
+
+.dlg-foot .warn { font-size: inherit; }
+
+[data-menu-list] {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(min(16rem, 100%), 1fr));
+  gap: 1px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  background: var(--tb-rule);
+  counter-reset: sheet;
+}
+
+[data-menu-list] > li {
+  background: var(--ms-ground);
+  counter-increment: sheet;
+}
+
+[data-menu-goto] {
+  display: grid;
+  grid-template-columns: 3rem minmax(0, 1fr);
+  align-items: baseline;
+  gap: 0.75rem;
+  inline-size: 100%;
+  min-block-size: 64px;
+  padding: 0.875rem 1.25rem;
+  border: 0;
+  background: var(--ms-ground);
+  color: var(--ink-2);
+  font-family: var(--font-data);
+  font-size: 0.875rem;
+  line-height: 1.3;
+  text-align: start;
+  transition: background-color 0.15s var(--ease-out), color 0.15s var(--ease-out);
+}
+
+[data-menu-goto]::before {
+  content: counter(sheet, decimal-leading-zero);
+  color: var(--ink-3);
+  font-family: var(--font-display);
+  font-size: 1.75rem;
+  font-weight: 640;
+  font-stretch: 86%;
+  line-height: 1;
+  font-variant-numeric: tabular-nums lining-nums;
+}
+
+[data-menu-goto] .nobr { white-space: nowrap; }
+[data-menu-goto]:hover { background: var(--ms-panel); color: var(--ink); }
+[data-menu-goto]:hover::before { color: var(--ink); }
+[data-menu-goto]:focus-visible { outline-offset: -4px; }
+[data-menu-goto][aria-current="true"] { background: var(--chosen-bg); color: var(--cyan); }
+[data-menu-goto][aria-current="true"]::before { color: var(--cyan); }
+
+.share-body {
+  display: grid;
+  grid-template-columns: minmax(0, 15rem) minmax(0, 1fr);
+  align-items: center;
+  gap: var(--s-6);
+  padding: var(--s-6) var(--s-5);
+}
+
+dialog[data-share] [data-qr] { inline-size: 100%; padding: 14px; }
+
+/* No URL to encode (file://, no SITE_URL): the QR tile is an XREF placeholder, so the lede stops
+   saying "scan". */
+.share-unhosted { display: none; }
+.share-body:has([data-qr]:empty) .share-scan { display: none; }
+.share-body:has([data-qr]:empty) .share-unhosted { display: inline; }
+
+.share-actions {
+  display: grid;
+  justify-items: start;
+  gap: var(--s-3);
+}
+
+.share-url {
+  max-inline-size: 100%;
+  padding: 0.5rem 0.75rem;
+  border: 1px dashed var(--line-2);
+  color: var(--ink-2);
+  font-size: 0.8125rem;
+  word-break: break-all;
+}
+
+@media (max-width: 720px) {
+  .result-dims { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .dlg-keys { display: none; }
+  .result { padding: var(--s-4); }
+  .share-body { grid-template-columns: minmax(0, 1fr); justify-items: center; padding: var(--s-5) var(--s-4); }
+  dialog[data-share] [data-qr] { max-inline-size: 15rem; }
+  .share-actions { justify-items: stretch; inline-size: 100%; }
+
+  dialog[data-menu],
+  dialog[data-share] {
+    inline-size: 100%;
+    max-block-size: 88dvh;
+    margin: auto 0 0;
+    padding-block-end: env(safe-area-inset-bottom, 0px);
+    border-width: 1px 0 0;
+  }
+}

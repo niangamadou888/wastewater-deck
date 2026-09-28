@@ -1,0 +1,48 @@
+/* Model-space tokens. Layer colours carry meaning:
+   cyan = dimensions, PE ranges, anything interactive or chosen
+   yellow = water and flow
+   red = centrelines, invert marks, warnings (never body text: 4.1:1 on ground) */
+:root {
+  --ms-ground: #1d232c;
+  --ms-panel: #232a35;
+  --ms-panel-2: #2b3340;
+  --ink: #e8ecef;
+  --ink-2: #b7bec5;
+  --ink-3: #8b949e;
+  --line: rgb(232 236 239 / 0.16);
+  --line-2: rgb(232 236 239 / 0.34);
+  --cyan: #3dd6e0;
+  --cyan-weak: rgb(61 214 224 / 0.14);
+  --yellow: #f2d14b;
+  --yellow-weak: rgb(242 209 75 / 0.12);
+  --red: #e0524a;
+  --red-weak: rgb(224 82 74 / 0.16);
+
+  --font-display: "Archivo", "Arial Narrow", system-ui, sans-serif;
+  --font-data: "B612", "Archivo", system-ui, sans-serif;
+
+  --fs-display: clamp(2.5rem, 1.2rem + 5.4vw, 5.75rem);
+  --fs-h2: clamp(1.85rem, 1.1rem + 2.6vw, 3.25rem);
+  --fs-h3: clamp(1.2rem, 1rem + 0.7vw, 1.6rem);
+  --fs-body: clamp(1rem, 0.95rem + 0.25vw, 1.125rem);
+  --fs-note: 0.875rem;
+  --fs-micro: 0.75rem;
+  /* The floor for every field label, key hint and micro annotation: 11px. */
+  --fs-label: 0.6875rem;
+
+  --wdth-display: 72%;
+  --wdth-wordmark: 125%;
+
+  --s-1: 0.25rem;
+  --s-2: 0.5rem;
+  --s-3: 0.75rem;
+  --s-4: 1rem;
+  --s-5: 1.5rem;
+  --s-6: 2rem;
+  --s-7: 3rem;
+  --s-8: 4.5rem;
+
+  --gutter: clamp(1rem, 0.5rem + 2.2vw, 2.5rem);
+  --tap: 44px;
+  --ease-out: cubic-bezier(0.16, 1, 0.3, 1);
+}

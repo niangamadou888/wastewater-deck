@@ -1,0 +1,25 @@
+/* Self-hosted, inlined at build (SIL OFL 1.1, see src/fonts/LICENSE-*.txt). */
+@font-face {
+  font-family: "Archivo";
+  src: url("../../fonts/archivo-var.woff2") format("woff2");
+  font-weight: 100 900;
+  font-stretch: 62% 125%;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "B612";
+  src: url("../../fonts/b612-400.woff2") format("woff2");
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "B612";
+  src: url("../../fonts/b612-700.woff2") format("woff2");
+  font-weight: 700;
+  font-style: normal;
+  font-display: swap;
+}

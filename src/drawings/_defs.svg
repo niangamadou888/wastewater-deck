@@ -1,0 +1,46 @@
+<svg class="dwg-defs" aria-hidden="true" focusable="false" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <!-- ANSI31: 45 degree section hatch for cut tank walls -->
+    <pattern id="hatch-ansi31" width="6" height="6" patternUnits="userSpaceOnUse" patternTransform="rotate(45)">
+      <line x1="0" y1="0" x2="0" y2="6" stroke="#e8ecef" stroke-opacity="0.6" stroke-width="1" />
+    </pattern>
+    <!-- Earth: sparse opposite diagonal -->
+    <pattern id="hatch-soil" width="14" height="14" patternUnits="userSpaceOnUse" patternTransform="rotate(-45)">
+      <line x1="0" y1="0" x2="0" y2="7" stroke="#e8ecef" stroke-opacity="0.22" stroke-width="1" />
+    </pattern>
+    <!-- AR-SAND stipple: bedding and backfill -->
+    <pattern id="hatch-sand" width="16" height="16" patternUnits="userSpaceOnUse">
+      <circle cx="2" cy="3" r="0.9" fill="#e8ecef" fill-opacity="0.55" />
+      <circle cx="9" cy="1.5" r="0.7" fill="#e8ecef" fill-opacity="0.45" />
+      <circle cx="13" cy="7" r="0.9" fill="#e8ecef" fill-opacity="0.55" />
+      <circle cx="5" cy="10" r="0.7" fill="#e8ecef" fill-opacity="0.45" />
+      <circle cx="11" cy="13" r="0.9" fill="#e8ecef" fill-opacity="0.5" />
+      <circle cx="1" cy="15" r="0.6" fill="#e8ecef" fill-opacity="0.4" />
+    </pattern>
+    <!-- AR-CONC: concrete base and slab -->
+    <pattern id="hatch-concrete" width="22" height="22" patternUnits="userSpaceOnUse">
+      <circle cx="4" cy="5" r="1" fill="#e8ecef" fill-opacity="0.5" />
+      <circle cx="15" cy="16" r="1.1" fill="#e8ecef" fill-opacity="0.5" />
+      <circle cx="18" cy="4" r="0.7" fill="#e8ecef" fill-opacity="0.4" />
+      <path d="M7 14 l4 -2 l1 4 z" fill="none" stroke="#e8ecef" stroke-opacity="0.5" stroke-width="0.8" />
+      <path d="M13 6 l3 3 l-4 1 z" fill="none" stroke="#e8ecef" stroke-opacity="0.45" stroke-width="0.8" />
+    </pattern>
+    <!-- Plastic bio-media rings -->
+    <pattern id="hatch-media" width="11" height="11" patternUnits="userSpaceOnUse">
+      <circle cx="3" cy="3" r="2.4" fill="none" stroke="#e8ecef" stroke-opacity="0.55" stroke-width="0.9" />
+      <circle cx="8.5" cy="8.5" r="2.4" fill="none" stroke="#e8ecef" stroke-opacity="0.55" stroke-width="0.9" />
+    </pattern>
+    <!-- Architectural dimension tick -->
+    <marker id="mk-tick" viewBox="0 0 10 10" refX="5" refY="5" markerWidth="9" markerHeight="9" markerUnits="userSpaceOnUse" orient="auto">
+      <path d="M2 8 L8 2" stroke="#3dd6e0" stroke-width="1.4" />
+    </marker>
+    <!-- Flow arrowhead (water) -->
+    <marker id="mk-flow" viewBox="0 0 10 10" refX="7" refY="5" markerWidth="9" markerHeight="9" markerUnits="userSpaceOnUse" orient="auto-start-reverse">
+      <path d="M0 1 L10 5 L0 9 z" fill="#f2d14b" />
+    </marker>
+    <!-- Leader terminator -->
+    <marker id="mk-dot" viewBox="0 0 6 6" refX="3" refY="3" markerWidth="5" markerHeight="5" markerUnits="userSpaceOnUse">
+      <circle cx="3" cy="3" r="2.4" fill="#b7bec5" />
+    </marker>
+  </defs>
+</svg>

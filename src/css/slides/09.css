@@ -1,0 +1,154 @@
+/* Sheet 09 — LT schedule and discharge limits. Styles owned by this sheet's author only.
+   The LT schedule with a to-scale plan length per model in the main region; the
+   EQA Standard A / B limits in the side column, Standard A marked as the design
+   target in the chosen (cyan) language. */
+
+.sheet-09 .sheet-main {
+  gap: var(--s-5);
+}
+
+.sheet-09 .sheet-side {
+  gap: var(--s-4);
+}
+
+/* ---- LT schedule -------------------------------------------------------- */
+
+.sheet-09 .s09-table tbody :is(th, td) {
+  padding-block: 0.5rem;
+}
+
+.sheet-09 .s09-len-col {
+  inline-size: 32%;
+  min-inline-size: 9rem;
+  padding-inline: var(--s-5) var(--s-3);
+}
+
+.sheet-09 .schedule-units .s09-len-col {
+  letter-spacing: 0.04em;
+}
+
+.sheet-09 .s09-len {
+  display: block;
+  overflow: visible;
+}
+
+.sheet-09 .s09-len line {
+  stroke: var(--cyan);
+  stroke-width: 1.25;
+  marker-start: url(#mk-tick);
+  marker-end: url(#mk-tick);
+}
+
+.sheet-09 .s09-notes li {
+  max-inline-size: none;
+}
+
+/* ---- EQA limits ---------------------------------------------------------- */
+
+/* Source line on its own row: inline-block keeps the caption underline off it. */
+.sheet-09 .s09-eqa caption small {
+  display: inline-block;
+  margin: var(--s-2) 0 0;
+  line-height: 1.4;
+}
+
+/* Narrow cells so every parameter reads on one line in the side column. */
+.sheet-09 .s09-eqa.is-compact :is(thead th, tbody th, tbody td) {
+  padding-inline: 0.375rem;
+}
+
+.sheet-09 .s09-eqa thead th {
+  letter-spacing: 0.1em;
+}
+
+.sheet-09 .s09-eqa thead th {
+  vertical-align: bottom;
+}
+
+.sheet-09 .s09-unit {
+  display: block;
+  margin-block-start: 3px;
+  color: var(--ink-3);
+  font-size: var(--fs-label);
+  letter-spacing: 0.02em;
+  text-transform: none;
+}
+
+.sheet-09 .s09-eqa thead th.s09-a {
+  color: var(--cyan);
+}
+
+.sheet-09 .s09-eqa thead th.s09-a .s09-unit {
+  color: var(--cyan);
+  opacity: 0.8;
+}
+
+.sheet-09 .s09-eqa tbody :is(th, td) {
+  padding-block: 0.25rem;
+}
+
+.sheet-09 .s09-eqa tbody th {
+  font-family: var(--font-data);
+  font-size: 0.75rem;
+  font-weight: 400;
+  font-stretch: 100%;
+  letter-spacing: 0;
+  color: var(--ink-2);
+  white-space: normal;
+}
+
+.sheet-09 .s09-eqa tbody td {
+  font-size: 0.8125rem;
+}
+
+.sheet-09 .s09-eqa tbody td.s09-a,
+.sheet-09 .s09-eqa tbody tr:hover > td.s09-a {
+  background: var(--chosen-bg);
+  color: var(--ink);
+  font-weight: 700;
+}
+
+.sheet-09 .s09-eqa thead tr > th.s09-a {
+  border-bottom-color: var(--cyan);
+}
+
+/* The BOD5 subscript holds the 11px label floor. */
+.sheet-09 .s09-eqa sub {
+  font-size: max(0.7em, var(--fs-label));
+  line-height: 0;
+}
+
+.sheet-09 .s09-applies > div {
+  grid-template-columns: 6.5rem minmax(0, 1fr);
+  padding-block: 0.5rem;
+}
+
+.sheet-09 .s09-applies dd {
+  font-size: 0.8125rem;
+}
+
+/* Laptop heights: denser rows in both schedules, notes in two columns. */
+@media (min-width: 721px) and (max-height: 820px) {
+  .sheet-09 .sheet-main { gap: var(--s-4); }
+  .sheet-09 .s09-table tbody :is(th, td) { padding-block: 0.3125rem; }
+  .sheet-09 .s09-notes .notes-title { padding-block-end: var(--s-3); }
+  .sheet-09 .s09-notes ol { grid-template-columns: repeat(2, minmax(0, 1fr)); column-gap: var(--s-6); }
+  .sheet-09 .s09-table caption { padding-block-end: var(--s-3); }
+  .sheet-09 .s09-eqa caption small { margin-block-start: var(--s-1); }
+  .sheet-09 .s09-eqa tbody :is(th, td) { padding-block: 0.1875rem; }
+  .sheet-09 .s09-applies > div { padding-block: 0.3125rem; }
+}
+
+/* Narrow columns: the schedule reads as per-model rows (schedule.css,
+   .is-rows); the to-scale length bar belongs to the table layout. */
+@container schedule-rows (max-width: 41rem) {
+  .sheet-09 .s09-len-col {
+    display: none;
+  }
+}
+
+@media (max-width: 720px) {
+  .sheet-09 .s09-applies > div {
+    grid-template-columns: minmax(0, 1fr);
+  }
+}

@@ -1,0 +1,89 @@
+/* Sheet 02 — Lintang Tankworks at a glance. Styles owned by this sheet's author only.
+   The sample site photo is a real, CC-licensed photograph (src/assets/photo-tanks.webp,
+   provenance in src/assets/photo-tanks.json), graded into the night sheet (luminosity over
+   the panel colour). It is set through CSS so the build inlines it: the HTML build does not
+   inline <img src>. */
+
+.sheet-02 {
+  --s02-tint: #2f3a48;
+  /* One reference to the photo, so the build inlines it once for both viewports. */
+  --s02-photo: url("../../assets/photo-tanks.webp");
+}
+
+.sheet-02 .s02-frame {
+  inline-size: 100%;
+  max-inline-size: calc((100dvh - 23rem) * 16 / 9);
+}
+
+.sheet-02 .s02-photo {
+  aspect-ratio: 16 / 9;
+  background: var(--s02-photo) center / cover no-repeat, var(--s02-tint);
+  background-blend-mode: luminosity;
+  filter: contrast(1.12) brightness(0.9);
+}
+
+/* Detail B: a second viewport on the same photo, enlarged on the inlet port
+   (hotspot 305, 370 of 1600 x 900 in photo-tanks.json). The image is 220% of the
+   viewport's width; 0% / 35% puts the port near the centre of a 2:1 window. */
+.sheet-02 .s02-detail-photo {
+  aspect-ratio: 2 / 1;
+  background: var(--s02-photo) 0% 35% / 220% auto no-repeat, var(--s02-tint);
+  background-blend-mode: luminosity;
+  filter: contrast(1.12) brightness(0.9);
+}
+
+.sheet-02 .s02-notes ol {
+  gap: var(--s-3);
+}
+
+.sheet-02 .s02-notes li {
+  font-size: 0.8125rem;
+}
+
+.sheet-02 .s02-notes li b {
+  color: var(--ink);
+}
+
+@media (min-width: 721px) and (max-height: 820px) {
+  .sheet-02 .s02-notes ol {
+    gap: var(--s-2);
+  }
+}
+
+/* ---- tablets and up: the viewport fills the sheet, the notes sit on the title block --- */
+
+/* The XREF viewport takes all the height under the sheet head (a taller crop of the
+   same photo), and the company notes stand directly on the title block, where a
+   drawing sheet keeps its general notes, so neither column trails off into space. */
+@media (min-width: 721px) {
+  .sheet-02 .s02-frame {
+    flex: 1 1 auto;
+    grid-template-rows: minmax(0, 1fr) auto;
+    max-inline-size: none;
+    min-block-size: 0;
+  }
+
+  .sheet-02 .s02-photo {
+    aspect-ratio: auto;
+    block-size: 100%;
+    min-block-size: 16rem;
+    background-position: center 42%, center;
+  }
+
+  .sheet-02 .sheet-side {
+    justify-content: space-between;
+  }
+}
+
+/* ---- phones ---------------------------------------------------------------------- */
+
+@media (max-width: 720px) {
+  .sheet-02 .s02-frame {
+    max-inline-size: none;
+  }
+
+  /* One column: the full photo already shows the port, so the detail is left out. */
+  .sheet-02 .s02-detail {
+    display: none;
+  }
+}

@@ -1,0 +1,44 @@
+[
+  {
+    "n": 1,
+    "layer": "inlet",
+    "label": "Inlet, 150 mm UPVC",
+    "detail": "Raw sewage enters the aerobic reactor tank through the end wall above top water level; invert depth is to be confirmed per site."
+  },
+  {
+    "n": 2,
+    "layer": "art",
+    "label": "ART, Aerobic Reactor Tank",
+    "detail": "A lower settling zone collects settleable solids at the bottom (anaerobic), and the up-chamber above the diffuser is the aeration zone that treats the flow aerobically."
+  },
+  {
+    "n": 3,
+    "layer": "diffuser",
+    "label": "Air diffuser",
+    "detail": "Air from the blowers is piped down through the manhole to a diffuser in the ART, supplied by the manufacturer with the system."
+  },
+  {
+    "n": 4,
+    "layer": "fst",
+    "label": "FST, Final Settlement Tank",
+    "detail": "A hybrid clarifier-settler behind the sloped partition, fed through the transfer pipe at the top of the partition."
+  },
+  {
+    "n": 5,
+    "layer": "outlet",
+    "label": "Outlet, 150 mm UPVC",
+    "detail": "Clarified effluent passes under the outlet baffle and leaves by the outlet pipe, set lower than the inlet. The system is designed for EQA Standard A effluent."
+  },
+  {
+    "n": 6,
+    "layer": "blower",
+    "label": "Blowers, 1 duty + 1 standby",
+    "detail": "Diaphragm air blowers, one duty and one standby, are compulsory and sit at grade in a weatherproof blower housing built by others."
+  },
+  {
+    "n": 7,
+    "layer": "water",
+    "label": "Top water level (TWL), H2",
+    "detail": "Water level H2 is 2,000 mm above the tank base on every model from LT-40 to LT-150."
+  }
+]

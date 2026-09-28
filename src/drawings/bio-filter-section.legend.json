@@ -1,0 +1,9 @@
+[
+  { "n": 1, "layer": "inlet", "label": "Inlet from last manhole", "detail": "Raw sewage enters through the higher of the two pipes (100 mm on the PE series, 150 mm on the FRP series) and is turned down into the settling zone." },
+  { "n": 2, "layer": "settling", "label": "Primary settling zone", "detail": "Flow travels down the outer zone, where solids settle, then passes under the filter chamber; settled sludge is removed once every two years." },
+  { "n": 3, "layer": "media", "label": "Bio-media filter", "detail": "Settled water rises through plastic bio-media held between a top and a bottom plate; the media strains out fine particles and dissolved matter (upflow anaerobic filtration)." },
+  { "n": 4, "layer": "outlet", "label": "Outlet to public drain", "detail": "Filtered effluent leaves by the lower pipe for discharge to a public drain; inlet and outlet invert levels are to be confirmed per site." },
+  { "n": 5, "layer": "water", "label": "Top water level (TWL)", "detail": "Water stands at height H2 above the tank base, given per model in the specification schedule." },
+  { "n": 6, "layer": "access", "label": "Manhole access", "detail": "Covers sit at ground level on brick sump extensions through a 100 mm slab; the smaller opening gives isolated, direct access to the settling zone for de-sludging." },
+  { "n": 7, "layer": "bedding", "label": "Base and sand backfill", "detail": "The tank sits on a 150 mm Grade 30 concrete base with BRC-A9 mesh over 50 mm lean concrete, backfilled with sand compacted in 150 mm layers." }
+]

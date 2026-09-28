@@ -1,0 +1,22 @@
+{
+  "name": "wastewater-deck",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "description": "Offline single-file interactive presentation deck engine for Lintang Tankworks, a fictional manufacturer: a portfolio concept for a wastewater and sanitation product range.",
+  "scripts": {
+    "build": "node build.mjs",
+    "build:watch": "node build.mjs --watch",
+    "test": "node --experimental-test-coverage --test tests/unit/",
+    "test:e2e": "playwright test",
+    "validate": "html-validate --config .htmlvalidate.json dist/index.html",
+    "check": "npm run build && npm test && npm run validate && npm run test:e2e",
+    "portfolio:images": "node portfolio/capture.mjs"
+  },
+  "devDependencies": {
+    "@playwright/test": "^1.47.0",
+    "esbuild": "^0.24.0",
+    "html-validate": "^8.24.0",
+    "qrcode-generator": "^1.4.4"
+  }
+}

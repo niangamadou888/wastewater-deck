@@ -1,0 +1,126 @@
+<svg class="dwg" viewBox="0 0 640 468" role="img" aria-labelledby="bio-filter-section-title bio-filter-section-desc" xmlns="http://www.w3.org/2000/svg">
+  <title id="bio-filter-section-title">Typical section: vertical bio-filter septic tank</title>
+  <desc id="bio-filter-section-desc">Section through a vertical bio-filter septic tank buried in a sand-backfilled pit on a 150 mm concrete base over lean concrete. Raw sewage enters by the higher inlet pipe and is turned down into the primary settling zone, passes under the filter chamber, rises through the bio-media and leaves, filtered, by the lower outlet pipe to the drain. Manhole covers at ground level; the smaller opening gives isolated, direct de-sludging access to the settling zone. Diameter D, height H1 and water level H2 are given per model in the schedule; invert levels are to be confirmed.</desc>
+
+  <!-- Soil beyond the excavation (band along ground and pit edge, pipes cut out) -->
+  <path class="ly-soil" d="M0 56H110L145 421H455L490 56H640V72H506L470 437H130L94 72H0Z M117.48 134H100.12L101.69 150H119.01Z M499.1 142H481.75L480.22 158H497.52Z" />
+
+  <g data-layer="bedding">
+    <!-- Sand backfill: pit minus tank, slab, sumps, base and pipes -->
+    <path class="ly-sand" d="M110 56H490L455 421H145Z M175 122V378A16 16 0 0 0 191 394H409A16 16 0 0 0 425 378V122A4 4 0 0 0 421 118H404V106H312V118H270V106H206V118H179A4 4 0 0 0 175 122Z M450 92H150V106H450Z M270 56H206V92H270Z M404 56H312V92H404Z M442 394H158V421H442Z M175 134H117.48L119.01 150H175Z M481.75 142H425V158H480.22Z" />
+    <!-- 150 mm concrete base on 50 mm lean concrete -->
+    <rect class="ly-concrete" x="158" y="394" width="284" height="20" />
+    <rect class="ly-concrete" x="158" y="414" width="284" height="7" />
+    <path class="ly-leader" d="M92.4 321.9L148 340" />
+    <path class="ly-leader" d="M89.4 327L168 404" />
+  </g>
+
+  <g data-layer="water">
+    <path class="ly-water" d="M181 158H419V378A10 10 0 0 1 409 388H191A10 10 0 0 1 181 378Z" />
+    <path class="ly-waterline" d="M183 158H311M320 158H370" />
+    <text class="ly-note" x="244" y="152">TWL</text>
+    <path class="ly-leader" d="M288 177V159" />
+  </g>
+
+  <!-- Tank shell in section (cut at the pipe penetrations) -->
+  <path class="ly-wall-hatch" d="M206 106H212V124H181V134H175V122A4 4 0 0 1 179 118H206Z" />
+  <path class="ly-wall-hatch" d="M264 106H270V118H312V106H318V124H264Z" />
+  <path class="ly-wall-hatch" d="M398 106H404V118H421A4 4 0 0 1 425 122V142H419V124H398Z" />
+  <path class="ly-wall-hatch" d="M175 150H181V378A10 10 0 0 0 191 388H409A10 10 0 0 0 419 378V158H425V378A16 16 0 0 1 409 394H191A16 16 0 0 1 175 378Z" />
+  <path class="ly-wall" d="M206 106H212V124H181V134H175V122A4 4 0 0 1 179 118H206Z" />
+  <path class="ly-wall" d="M264 106H270V118H312V106H318V124H264Z" />
+  <path class="ly-wall" d="M398 106H404V118H421A4 4 0 0 1 425 122V142H419V124H398Z" />
+  <path class="ly-wall" d="M175 150H181V378A10 10 0 0 0 191 388H409A10 10 0 0 0 419 378V158H425V378A16 16 0 0 1 409 394H191A16 16 0 0 1 175 378Z" />
+
+  <g data-layer="media">
+    <!-- Filter chamber: open-bottomed cylinder hung from the large opening -->
+    <rect class="ly-wall-hatch" x="313" y="124" width="5" height="176" />
+    <rect class="ly-wall-hatch" x="398" y="124" width="5" height="18" />
+    <rect class="ly-wall-hatch" x="398" y="158" width="5" height="142" />
+    <rect class="ly-wall" x="313" y="124" width="5" height="176" />
+    <rect class="ly-wall" x="398" y="124" width="5" height="18" />
+    <rect class="ly-wall" x="398" y="158" width="5" height="142" />
+    <rect class="ly-media" x="318" y="192" width="80" height="86" />
+    <!-- plates over and under the bed (brochure cutaway); ticks mark them as grids the upflow passes through -->
+    <path class="ly-wall" d="M318 192H398M318 278H398" />
+    <path class="ly-media" d="M323 188v8M333 188v8M343 188v8M353 188v8M363 188v8M373 188v8M383 188v8M393 188v8M323 274v8M333 274v8M343 274v8M353 274v8M363 274v8M373 274v8M383 274v8M393 274v8" />
+    <!-- filtered: upflow through the media -->
+    <path class="ly-flow" d="M336 292V186" />
+    <path class="ly-flow" d="M358 292V186" />
+    <path class="ly-flow" d="M380 292V186" />
+    <path class="ly-leader" d="M509 250H390" />
+    <text class="ly-label-long" x="522" y="286" text-anchor="middle">BIO-MEDIA</text>
+    <text class="ly-label-long" x="522" y="303" text-anchor="middle">FILTER</text>
+  </g>
+
+  <g data-layer="settling">
+    <!-- settled: down the settling zone, under the filter chamber, up into it -->
+    <path class="ly-flow" d="M196 214V316C196 350 218 366 258 366C298 366 326 348 340 312" />
+    <text class="ly-label-long" x="256" y="236" text-anchor="middle">PRIMARY</text>
+    <text class="ly-label-long" x="256" y="254" text-anchor="middle">SETTLING</text>
+  </g>
+
+  <g data-layer="inlet">
+    <path class="ly-wall" d="M62 134H188M62 150H188M188 128V134M188 150V200M204 128V200" />
+    <path class="ly-wall" d="M62 134C68 137 68 139 62 142C56 145 56 147 62 150" />
+    <!-- raw: in from the last manhole, turned down into the settling zone -->
+    <path class="ly-flow" d="M72 142H176" />
+    <path class="ly-flow" d="M196 146V194" />
+    <path class="ly-invert" d="M146 150l-5 9h10z" />
+    <text class="ly-note" x="154" y="163">IL</text>
+    <text class="ly-label-long" x="44" y="127">INLET</text>
+    <path class="ly-leader" d="M80 173V151" />
+  </g>
+
+  <g data-layer="outlet">
+    <path class="ly-wall" d="M372 142H572M372 158H572" />
+    <path class="ly-wall" d="M572 142C578 145 578 147 572 150C566 153 566 155 572 158" />
+    <!-- discharged: out of the filter chamber to the drain -->
+    <path class="ly-flow" d="M376 150H548" />
+    <path class="ly-invert" d="M446 158l-5 9h10z" />
+    <text class="ly-note" x="454" y="171">IL</text>
+    <text class="ly-label-long" x="504" y="135">OUTLET</text>
+    <path class="ly-leader" d="M522 177V159" />
+  </g>
+
+  <g data-layer="access">
+    <!-- 100 mm slab with manhole openings, brick sump extensions, covers at grade -->
+    <rect class="ly-concrete" x="150" y="92" width="62" height="14" />
+    <rect class="ly-concrete" x="264" y="92" width="54" height="14" />
+    <rect class="ly-concrete" x="398" y="92" width="52" height="14" />
+    <path class="ly-wall-hatch" d="M206 56h6v36h-6zM264 56h6v36h-6zM312 56h6v36h-6zM398 56h6v36h-6zM200 49h76v7h-76zM306 49h104v7h-104z" />
+    <path class="ly-wall" d="M206 56h6v36h-6zM264 56h6v36h-6zM312 56h6v36h-6zM398 56h6v36h-6zM200 49h76v7h-76zM306 49h104v7h-104z" />
+    <path class="ly-center" d="M238 42V138M358 42V138" />
+    <path class="ly-leader" d="M175.5 34L203 48.5" />
+    <text class="ly-label-long" x="146" y="24" text-anchor="end">DE-SLUDGING</text>
+    <text class="ly-label-long" x="146" y="41" text-anchor="end">ACCESS</text>
+    <text class="ly-note" x="358" y="37" text-anchor="middle">MANHOLE COVER</text>
+  </g>
+
+  <!-- Ground level and excavation -->
+  <path class="ly-ground" d="M0 56H200M276 56H306M410 56H640" />
+  <path class="ly-ground" d="M110 56L117.48 134M119.01 150L145 421H455L480.22 158M481.75 142L490 56" />
+  <text class="ly-note" x="614" y="50">GL</text>
+
+  <!-- Dimension strings (letters only; values per model schedule) -->
+  <path class="ly-dim-ext" d="M175 384V462M425 384V462" />
+  <path class="ly-dim" d="M175 456H425" />
+  <text class="ly-dim-text" x="300" y="449" text-anchor="middle">D</text>
+
+  <path class="ly-dim-ext" d="M146 106H28M154 394H28" />
+  <path class="ly-dim" d="M34 394V106" />
+  <text class="ly-dim-text" x="28" y="250" text-anchor="middle" transform="rotate(-90 28 250)">H1</text>
+
+  <path class="ly-dim-ext" d="M578 158H612M446 394H612" />
+  <path class="ly-dim" d="M606 394V158" />
+  <text class="ly-dim-text" x="600" y="276" text-anchor="middle" transform="rotate(-90 600 276)">H2</text>
+
+  <!-- Balloons, numbered in the order the water travels -->
+  <g class="ly-balloon" data-layer="inlet"><circle cx="80" cy="186" r="13" /><text x="80" y="186">1</text></g>
+  <g class="ly-balloon" data-layer="settling"><circle cx="256" cy="296" r="13" /><text x="256" y="296">2</text></g>
+  <g class="ly-balloon" data-layer="media"><circle cx="522" cy="250" r="13" /><text x="522" y="250">3</text></g>
+  <g class="ly-balloon" data-layer="outlet"><circle cx="522" cy="190" r="13" /><text x="522" y="190">4</text></g>
+  <g class="ly-balloon" data-layer="water"><circle cx="288" cy="190" r="13" /><text x="288" y="190">5</text></g>
+  <g class="ly-balloon" data-layer="access"><circle cx="164" cy="28" r="13" /><text x="164" y="28">6</text></g>
+  <g class="ly-balloon" data-layer="bedding"><circle cx="80" cy="318" r="13" /><text x="80" y="318">7</text></g>
+</svg>

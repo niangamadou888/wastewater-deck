@@ -1,0 +1,14 @@
+/* Design layer for the drawing-sheet deck. Import after engine.css
+   (src/css/main.css: @import './design.css';). esbuild inlines every file and
+   the fonts; order matters: tokens before the rules that read them, and the
+   drawing layer last so its classes win inside svg.dwg. controls.css holds the
+   selector, result and dialogs, and schedule.css the spec schedule (both split
+   out of components.css to keep files small). */
+@import url("./design/fonts.css");
+@import url("./design/tokens.css");
+@import url("./design/base.css");
+@import url("./design/sheet.css");
+@import url("./design/components.css");
+@import url("./design/schedule.css");
+@import url("./design/controls.css");
+@import url("./design/drawing.css");

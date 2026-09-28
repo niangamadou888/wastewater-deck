@@ -1,0 +1,278 @@
+/* Document type and browser surfaces for the drawing sheet.
+   Archivo carries titles (condensed display at 72%, expanded wordmark at 125%);
+   B612, the cockpit-display face, carries body copy, notes and every number.
+   B612 digits are equal-width (tabular) by design; tabular-nums is still set so
+   Archivo figures line up too. */
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+html {
+  color-scheme: dark;
+  background: var(--ms-ground);
+  color: var(--ink);
+  -webkit-text-size-adjust: 100%;
+  text-size-adjust: 100%;
+  scrollbar-width: thin;
+  scrollbar-color: var(--line-2) var(--ms-ground);
+}
+
+body {
+  margin: 0;
+  min-height: 100vh;
+  min-height: 100dvh;
+  background: var(--ms-ground);
+  color: var(--ink);
+  font-family: var(--font-data);
+  font-size: var(--fs-body);
+  line-height: 1.6;
+  font-variant-numeric: tabular-nums lining-nums;
+  font-kerning: normal;
+  caret-color: var(--cyan);
+  overflow-wrap: break-word;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  -webkit-tap-highlight-color: transparent;
+}
+
+/* ---- headings: tight below, generous above ------------------------------ */
+
+:where(h1, h2, h3, h4) {
+  margin: 0 0 var(--s-3);
+  color: var(--ink);
+  font-family: var(--font-display);
+  text-wrap: balance;
+}
+
+:where(* + h2) { margin-block-start: var(--s-7); }
+:where(* + h3) { margin-block-start: var(--s-6); }
+:where(* + h4) { margin-block-start: var(--s-5); }
+
+h1 {
+  font-size: var(--fs-display);
+  font-weight: 720;
+  font-stretch: var(--wdth-display);
+  line-height: 0.93;
+  letter-spacing: -0.018em;
+}
+
+h2 {
+  font-size: var(--fs-h2);
+  font-weight: 700;
+  font-stretch: var(--wdth-display);
+  line-height: 0.98;
+  letter-spacing: -0.012em;
+}
+
+h3 {
+  font-size: var(--fs-h3);
+  font-weight: 620;
+  font-stretch: 88%;
+  line-height: 1.15;
+}
+
+h4 {
+  font-family: var(--font-data);
+  font-size: var(--fs-note);
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  line-height: 1.3;
+  text-transform: uppercase;
+}
+
+/* ---- running text -------------------------------------------------------- */
+
+:where(p, ul, ol, dl, dd, figure, blockquote, table, fieldset) {
+  margin: 0;
+}
+
+:where(p, li, dd, figcaption, legend, label) {
+  max-inline-size: 70ch;
+  text-wrap: pretty;
+}
+
+:where(p + p, p + ul, p + ol, ul + p, ol + p) {
+  margin-block-start: var(--s-4);
+}
+
+b,
+strong {
+  font-weight: 700;
+  color: var(--ink);
+}
+
+small {
+  font-size: var(--fs-note);
+}
+
+abbr[title] {
+  text-decoration: none;
+  cursor: help;
+}
+
+/* Numbers set in the display face: lining, equal width. */
+.num {
+  font-variant-numeric: tabular-nums lining-nums;
+}
+
+/* The typographic wordmark that stands in for the logo. */
+.wordmark {
+  font-family: var(--font-display);
+  font-weight: 800;
+  font-stretch: var(--wdth-wordmark);
+  letter-spacing: 0.17em;
+  margin-inline-end: -0.17em;
+  line-height: 1;
+  text-transform: uppercase;
+  white-space: nowrap;
+}
+
+/* ---- links ---------------------------------------------------------------- */
+
+a {
+  color: var(--cyan);
+  text-decoration-line: underline;
+  text-decoration-thickness: 1px;
+  text-decoration-color: rgb(61 214 224 / 0.5);
+  text-underline-offset: 0.24em;
+  transition:
+    text-decoration-color 0.2s var(--ease-out),
+    text-decoration-thickness 0.2s var(--ease-out);
+}
+
+a:hover {
+  text-decoration-color: var(--cyan);
+  text-decoration-thickness: 2px;
+}
+
+/* ---- browser surfaces ----------------------------------------------------- */
+
+::selection {
+  background: var(--cyan);
+  color: var(--ms-ground);
+}
+
+::placeholder {
+  color: var(--ink-3);
+  opacity: 1;
+}
+
+::marker {
+  color: var(--ink-3);
+}
+
+:focus-visible {
+  outline: 2px solid var(--cyan);
+  outline-offset: 3px;
+}
+
+:focus:not(:focus-visible) {
+  outline: none;
+}
+
+::-webkit-scrollbar {
+  width: 10px;
+  height: 10px;
+}
+
+::-webkit-scrollbar-track {
+  background: var(--ms-ground);
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--line-2);
+  border: 3px solid var(--ms-ground);
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: var(--ink-3);
+}
+
+::-webkit-scrollbar-corner {
+  background: var(--ms-ground);
+}
+
+/* ---- form and media resets ------------------------------------------------ */
+
+:where(button, input, select, textarea) {
+  font: inherit;
+  color: inherit;
+  letter-spacing: inherit;
+}
+
+:where(button) {
+  cursor: pointer;
+}
+
+:where(img, video) {
+  display: block;
+  max-inline-size: 100%;
+  block-size: auto;
+}
+
+kbd {
+  display: inline-grid;
+  place-items: center;
+  min-inline-size: 20px;
+  block-size: 20px;
+  padding: 0 5px;
+  border: 1px solid var(--ink-3);
+  border-radius: 10px;
+  color: var(--ink);
+  font-family: var(--font-data);
+  font-size: var(--fs-label);
+  font-weight: 700;
+  line-height: 1;
+}
+
+/* Authored line icons: one stroke weight everywhere. */
+.ico {
+  flex: none;
+  inline-size: 18px;
+  block-size: 18px;
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 1.5;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+.visually-hidden {
+  position: absolute !important;
+  inline-size: 1px;
+  block-size: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0 0 0 0);
+  white-space: nowrap;
+  border: 0;
+}
+
+[hidden] {
+  display: none !important;
+}
+
+/* ---- preferences ----------------------------------------------------------- */
+
+@media (prefers-contrast: more) {
+  :root {
+    --line: rgb(232 236 239 / 0.34);
+    --line-2: rgb(232 236 239 / 0.6);
+    --ink-3: var(--ink-2);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.001ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.001ms !important;
+    scroll-behavior: auto !important;
+  }
+}

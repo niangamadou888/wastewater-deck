@@ -1,0 +1,11 @@
+[
+  { "n": 1, "layer": "groundwater", "label": "Groundwater table (GWT)", "detail": "Drawn above the tank invert: the high water table case this anchorage is built for." },
+  { "n": 2, "layer": "backfill", "label": "Sand backfill", "detail": "Fills the 300 to 600 mm working space between the base edge and the pit wall, compacted in 150 mm layers up to the opening rim." },
+  { "n": 3, "layer": "tank", "label": "FRP bio-filter tank, horizontal series", "detail": "Diameter 1500 to 1700 mm (drawn schematically); filled with water to top water level before backfilling." },
+  { "n": 4, "layer": "strap", "label": "Anchor strap, Ø20 mm SS304", "detail": "Tied over the tank and tightened with a stainless steel turnbuckle, so buoyancy is resisted by the straps and the base." },
+  { "n": 5, "layer": "hooks", "label": "Anchor hooks, Ø12 mm stainless steel", "detail": "Four hooks cast into the concrete base to take the straps." },
+  { "n": 6, "layer": "base", "label": "Concrete base, 150 mm grade 30 N", "detail": "Reinforced with one layer of BRC-A9 wire mesh, on 50 mm lean concrete." },
+  { "n": 7, "layer": "pipes", "label": "Inlet and outlet pipes, 150 mm", "detail": "Both laid at a 1:100 drop gradient; invert levels TBC." },
+  { "n": 8, "layer": "slab", "label": "Concrete slab, 100 mm 1:2:4", "detail": "Laid over the tank with one layer of BRC-A9 wire mesh and manhole openings." },
+  { "n": 9, "layer": "necks", "label": "Brick sump manhole necks and covers", "detail": "Brick sump necks connect the slab's manhole openings to the manhole covers." }
+]

@@ -1,0 +1,149 @@
+<svg class="dwg" viewBox="0 0 640 480" role="img" aria-labelledby="frp-anchorage-detail-title frp-anchorage-detail-desc" xmlns="http://www.w3.org/2000/svg">
+  <title id="frp-anchorage-detail-title">Horizontal FRP bio-filter tank anchored against a high water table</title>
+  <desc id="frp-anchorage-detail-desc">End section through an anchor strap of a horizontal FRP bio-filter tank, cut through the tank legs, with the groundwater table above the tank invert. The tank stands on a 150 mm grade 30 N concrete base with one layer of BRC-A9 mesh, on 50 mm lean concrete. The base edge sits 300 to 600 mm from the pit wall, the working space. A 20 mm SS304 strap passes over the tank and is tightened with a stainless steel turnbuckle just above a 12 mm stainless steel hook cast in the base, so buoyancy is resisted by the straps and the base. The tank is filled with water to top water level before sand backfill is compacted in 150 mm layers. A 100 mm 1:2:4 concrete slab with BRC-A9 mesh covers the tank, with brick sump manhole necks and covers above. An inset long section, not to scale, shows the two necks, the straps, the top water level and the 150 mm inlet and outlet pipes laid at a 1:100 fall. Invert levels are to be confirmed. Tank internals are omitted.</desc>
+  <path class="ly-soil" d="M16 178 99.9 178 109.9 459 432.1 459 442.1 178 450 178 450 467 16 467Z" />
+  <path class="ly-ground" d="M16 178H450" />
+  <path class="ly-ground" d="M99.9 178 109.9 459 432.1 459 442.1 178" />
+  <g data-layer="groundwater">
+    <path class="ly-water" d="M16 296 450 296 450 467 16 467ZM360.7 296H181.3A94 94 0 1 0 360.7 296Z" />
+    <path class="ly-waterline" d="M34 296H175M367 296H450" />
+    <text class="ly-label-long" x="54" y="289">GWT</text>
+  </g>
+  <g data-layer="backfill">
+    <path class="ly-sand" d="M99.9 178 442.1 178 441.3 202 100.7 202Z" />
+    <path class="ly-sand" d="M101.2 214 440.8 214 432.4 452 401 452 401 434 141 434 141 452 109.6 452ZM205 399.1L209 434H227L231 415.7A100 100 0 0 0 311 415.7L315 434H333L337 399.1A100 100 0 1 0 205 399.1Z" />
+    <path class="ly-dim-ext" d="M141 431V421M108.7 426H22" />
+    <path class="ly-dim" d="M108.7 426H141" />
+    <text class="ly-dim-text" x="103.7" y="421" text-anchor="end">300–600</text>
+  </g>
+  <g data-layer="base">
+    <path class="ly-concrete" d="M109.6 452 432.4 452 432.1 459 109.9 459Z" />
+    <rect class="ly-concrete" x="141" y="434" width="260" height="18" />
+    <path class="ly-steel" d="M151 445h0M161 445h0M171 445h0M181 445h0M191 445h0M201 445h0M211 445h0M221 445h0M231 445h0M241 445h0M251 445h0M261 445h0M271 445h0M281 445h0M291 445h0M301 445h0M311 445h0M321 445h0M331 445h0M341 445h0M351 445h0M361 445h0M371 445h0M381 445h0M391 445h0" />
+    <path class="ly-dim-ext" d="M137 434H85M106.6 452H85M106.9 459H85" />
+    <path class="ly-dim" d="M90 434V452" />
+    <path class="ly-dim" d="M90 452V459" />
+    <text class="ly-dim-text" x="79" y="448" text-anchor="end">150</text>
+    <text class="ly-dim-text" x="79" y="470" text-anchor="end">50</text>
+  </g>
+  <g data-layer="slab">
+    <path class="ly-concrete" d="M100.7 202 441.3 202 440.8 214 101.2 214Z" />
+    <path class="ly-steel" d="M111 208h0M121 208h0M131 208h0M141 208h0M151 208h0M161 208h0M171 208h0M181 208h0M191 208h0M201 208h0M211 208h0M221 208h0M231 208h0M241 208h0M251 208h0M261 208h0M271 208h0M281 208h0M291 208h0M301 208h0M311 208h0M321 208h0M331 208h0M341 208h0M351 208h0M361 208h0M371 208h0M381 208h0M391 208h0M401 208h0M411 208h0M421 208h0M431 208h0" />
+    <path class="ly-dim-ext" d="M97.7 202H85M98.2 214H85" />
+    <path class="ly-dim" d="M90 202V214" />
+    <text class="ly-dim-text" x="79" y="213" text-anchor="end">100</text>
+  </g>
+  <g data-layer="necks">
+    <path class="ly-hidden" d="M235 178V184H307V178M239 184V202M303 184V202M247 184V202M295 184V202M243 214V228M299 214V228" />
+  </g>
+  <g data-layer="tank">
+    <path class="ly-water" d="M198.6 264A94 94 0 1 0 343.4 264Z" />
+    <path class="ly-wall-hatch" d="M205 399.1A100 100 0 1 1 337 399.1L333 434H315L311 415.7A100 100 0 0 1 231 415.7L227 434H209ZM177 324A94 94 0 1 0 365 324A94 94 0 1 0 177 324Z" />
+    <path class="ly-wall" d="M205 399.1A100 100 0 1 1 337 399.1L333 434H315L311 415.7A100 100 0 0 1 231 415.7L227 434H209Z" />
+    <path class="ly-wall" d="M177 324A94 94 0 1 1 365 324A94 94 0 1 1 177 324Z" />
+    <path class="ly-waterline" d="M198.6 264H343.4" />
+    <text class="ly-label-long" x="281" y="257">TWL</text>
+  </g>
+  <g data-layer="hooks">
+    <path class="ly-steel" d="M361 448H367V426A5 5 0 0 1 377 426V431" />
+    <path class="ly-steel" d="M181 448H175V426A5 5 0 0 0 165 426V431" />
+  </g>
+  <g data-layer="strap">
+    <path class="ly-steel" d="M170 421L169.5 324.5A101.5 101.5 0 1 1 372.5 324.5L372.2 388M372 414L372 421" />
+    <path class="ly-steel" d="M368.2 388L368 414L376 414L376.2 388Z" />
+  </g>
+  <path class="ly-center" d="M271 166V461M159 324H383" />
+  <text class="ly-label-long" x="16" y="172">GL</text>
+  <path class="ly-soil" d="M16 62 97 62 100.3 154.7 239.7 154.7 243 62 324 62 324 157.4 16 157.4Z" />
+  <path class="ly-ground" d="M16 62H141.5M165.3 62H174.7M198.5 62H324" />
+  <path class="ly-ground" d="M97 62 100.3 154.7 239.7 154.7 243 62" />
+  <g data-layer="backfill">
+    <path class="ly-sand" d="M97 62 142.8 62 142.8 69.9 97.3 69.9ZM164 62 176 62 176 69.9 164 69.9ZM197.2 62 243 62 242.7 69.9 197.2 69.9Z" />
+    <path class="ly-sand" d="M97.5 73.9 242.5 73.9 239.7 152.4 229.4 152.4 229.4 146.5 110.6 146.5 110.6 152.4 100.3 152.4ZM128.5 77.2A8 33 0 0 0 128.5 143.2H211.5A8 33 0 0 0 211.5 77.2Z" />
+  </g>
+  <g data-layer="base">
+    <path class="ly-concrete" d="M100.3 152.4 239.7 152.4 239.7 154.7 100.3 154.7Z" />
+    <rect class="ly-concrete" x="110.6" y="146.5" width="118.8" height="5.9" />
+  </g>
+  <g data-layer="slab">
+    <path class="ly-concrete" d="M97.3 69.9 145.5 69.9 145.5 73.9 97.5 73.9ZM161.3 69.9 178.7 69.9 178.7 73.9 161.3 73.9ZM194.5 69.9 242.7 69.9 242.5 73.9 194.5 73.9Z" />
+  </g>
+  <g data-layer="necks">
+    <rect class="ly-wall-hatch" x="142.8" y="64" width="2.6" height="5.9" />
+    <rect class="ly-wall-hatch" x="161.3" y="64" width="2.6" height="5.9" />
+    <rect class="ly-wall-hatch" x="176" y="64" width="2.6" height="5.9" />
+    <rect class="ly-wall-hatch" x="194.5" y="64" width="2.6" height="5.9" />
+    <path class="ly-wall" d="M142.8 64V69.9M145.5 64V77.2M161.3 64V77.2M164 64V69.9M176 64V69.9M178.7 64V77.2M194.5 64V77.2M197.2 64V69.9" />
+    <path class="ly-wall" d="M141.5 62 165.3 62 165.3 64 141.5 64ZM174.7 62 198.5 62 198.5 64 174.7 64Z" />
+  </g>
+  <g data-layer="tank">
+    <path class="ly-water" d="M122.1 90.4H217.9A8 33 0 0 1 211.5 143.2H128.5A8 33 0 0 1 122.1 90.4Z" />
+    <path class="ly-wall" d="M128.5 77.2H211.5A8 33 0 0 1 211.5 143.2H128.5A8 33 0 0 1 128.5 77.2ZM134.5 143.2V146.5M140.5 143.2V146.5M199.5 143.2V146.5M205.5 143.2V146.5" />
+    <path class="ly-waterline" d="M124.1 90.4H215.9" />
+  </g>
+  <g data-layer="strap">
+    <path class="ly-steel" d="M137.5 146.5V76M202.5 146.5V76" />
+  </g>
+  <g data-layer="groundwater">
+    <path class="ly-waterline" d="M16 100.9H120.8M219.2 100.9H324" />
+  </g>
+  <g data-layer="pipes">
+    <path class="ly-wall" d="M16 79.4L124.2 82.5M16 84.4L122.7 87.4M216.8 85.4L324 88.4M217.9 90.4L324 93.4" />
+    <path class="ly-flow" d="M19 82L116.7 84.7" />
+    <path class="ly-flow" d="M223.9 88.1L321 90.8" />
+    <path class="ly-invert" d="M90.9 86.5l-4 7h8z" />
+    <path class="ly-invert" d="M249 91.3l-4 7h8z" />
+    <text class="ly-note" x="94" y="74.4" text-anchor="end">FALL 1:100</text>
+    <text class="ly-note" x="247" y="81.4">FALL 1:100</text>
+  </g>
+  <text class="ly-note" x="16" y="13">LONG SECTION, NTS</text>
+  <g class="ly-balloon" data-layer="groundwater"><circle cx="34" cy="296" r="13" /><text x="34" y="296">1</text></g>
+  <g data-layer="backfill">
+    <path class="ly-leader" d="M465.2 260L413.5 252" />
+  </g>
+  <g class="ly-balloon" data-layer="backfill"><circle cx="478" cy="262" r="13" /><text x="478" y="262">2</text></g>
+  <text class="ly-label-long" x="498" y="263">SAND BACKFILL</text>
+  <text class="ly-note" x="498" y="278">150 MM LAYERS</text>
+  <text class="ly-note" x="498" y="293">TO RIM</text>
+  <g data-layer="tank">
+    <path class="ly-leader" d="M466.5 318.1L355.8 377" />
+  </g>
+  <g class="ly-balloon" data-layer="tank"><circle cx="478" cy="312" r="13" /><text x="478" y="312">3</text></g>
+  <text class="ly-label-long" x="498" y="313">FRP TANK</text>
+  <text class="ly-note" x="498" y="328">HORIZONTAL</text>
+  <text class="ly-note" x="498" y="343">FILLED TO TWL</text>
+  <g data-layer="strap">
+    <path class="ly-leader" d="M465.6 366L377.6 394" />
+  </g>
+  <g class="ly-balloon" data-layer="strap"><circle cx="478" cy="362" r="13" /><text x="478" y="362">4</text></g>
+  <text class="ly-label-long" x="498" y="363">SS304 STRAP Ø20</text>
+  <text class="ly-note" x="498" y="378">SS TURNBUCKLE</text>
+  <g data-layer="hooks">
+    <path class="ly-leader" d="M465.1 413.3L375.5 422.5" />
+  </g>
+  <g class="ly-balloon" data-layer="hooks"><circle cx="478" cy="412" r="13" /><text x="478" y="412">5</text></g>
+  <text class="ly-label-long" x="498" y="413">SS HOOKS Ø12</text>
+  <text class="ly-note" x="498" y="428">4 NOS, IN BASE</text>
+  <g data-layer="base">
+    <path class="ly-leader" d="M465.4 456.9L396 440" />
+  </g>
+  <g class="ly-balloon" data-layer="base"><circle cx="478" cy="460" r="13" /><text x="478" y="460">6</text></g>
+  <text class="ly-label-long" x="498" y="461">BASE 150, 30 N</text>
+  <text class="ly-note" x="498" y="476">BRC-A9, 50 LEAN</text>
+  <g data-layer="pipes">
+    <path class="ly-leader" d="M284.5 127L283 92.7" />
+  </g>
+  <g class="ly-balloon" data-layer="pipes"><circle cx="285" cy="140" r="13" /><text x="285" y="140">7</text></g>
+  <text class="ly-label-long" x="305" y="141">PIPES Ø150</text>
+  <g data-layer="slab">
+    <path class="ly-leader" d="M416.7 158.6L404 206" />
+  </g>
+  <g class="ly-balloon" data-layer="slab"><circle cx="420" cy="146" r="13" /><text x="420" y="146">8</text></g>
+  <text class="ly-label-long" x="440" y="147">SLAB 100</text>
+  <text class="ly-note" x="440" y="162">1:2:4, BRC-A9</text>
+  <g data-layer="necks">
+    <path class="ly-leader" d="M169.3 41.9L177.7 61" />
+  </g>
+  <g class="ly-balloon" data-layer="necks"><circle cx="164" cy="30" r="13" /><text x="164" y="30">9</text></g>
+  <text class="ly-label-long" x="184" y="31">BRICK NECKS</text>
+</svg>

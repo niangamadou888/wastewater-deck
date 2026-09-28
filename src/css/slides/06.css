@@ -1,0 +1,92 @@
+/* Sheet 06 — PE Bio-Filter, 6-18 PE. Styles owned by this sheet's author only.
+   Scoped under .s06 (the section's own class). */
+
+/* Schedule: the sheet's main table, full width of the drawing side. */
+.s06 .s06-schedule tbody :is(th, td) {
+  padding-block: 0.75rem;
+}
+
+/* Key facts in two columns under the schedule on wide sheets. */
+.s06 .s06-facts {
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  column-gap: var(--gutter);
+}
+
+.s06 .s06-facts > div {
+  grid-template-columns: 5.5rem minmax(0, 1fr);
+}
+
+.s06 .s06-facts dd {
+  font-size: 0.8125rem;
+}
+
+/* Measured PE scale, reduced: this sheet's series in cyan, the others ghosted. */
+.s06 .s06-scale {
+  padding-inline: 0 1rem;
+}
+
+.s06 .s06-ghost {
+  opacity: 0.5;
+}
+
+.s06 .s06-station {
+  fill: var(--ms-ground);
+  stroke: var(--cyan);
+  stroke-width: 1.25;
+}
+
+/* The 6 PE drawing is shown at about two thirds of its viewBox width, so its
+   text is set larger in viewBox units to read at 11-12 px. */
+.s06 .s06-figure .ly-dim-text {
+  font-size: 17px;
+}
+
+.s06 .s06-dwg-code {
+  fill: var(--ink-2);
+  font-size: 17px;
+  letter-spacing: 0.06em;
+}
+
+.s06 .s06-dwg-b {
+  fill: var(--ink);
+  font-weight: 700;
+}
+
+.s06 .s06-figure .view-sub {
+  max-inline-size: 42ch;
+  line-height: 1.45;
+}
+
+/* Laptop heights: denser schedule rows and key facts, one screen. */
+@media (min-width: 721px) and (max-height: 820px) {
+  .s06 .sheet-main { gap: var(--s-5); }
+  .s06 .s06-schedule caption { padding-block-end: var(--s-3); }
+  .s06 .s06-schedule tbody :is(th, td) { padding-block: 0.375rem; }
+  .s06 .s06-facts > div { padding-block: 0.375rem; }
+}
+
+@media (max-width: 1180px) {
+  .s06 .s06-facts {
+    grid-template-columns: minmax(0, 1fr);
+  }
+}
+
+/* Phones: the drawing fills the width (about 0.56 of its viewBox), so its
+   text steps up again; the kit's phone rule would set dimensions at 22px. */
+@media (max-width: 720px) {
+  .s06 .s06-figure .ly-dim-text {
+    font-size: 21px;
+  }
+
+  .s06 .s06-dwg-code {
+    font-size: 20px;
+  }
+
+  .s06 .s06-scale {
+    padding-inline: 0 0.75rem;
+  }
+
+  .s06 .s06-station {
+    display: none;
+  }
+}

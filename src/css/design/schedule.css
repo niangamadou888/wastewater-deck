@@ -1,0 +1,306 @@
+/* Spec schedule: the drawing-sheet schedule table (units row, tabular
+   figures, sticky model column, chosen row in cyan), its scroll wrapper and
+   hint, the orientation glyph, and the per-model rows layout for narrow
+   columns. Split out of components.css to keep files small; the shared
+   field-label and caption typography stays there. Markup contract and
+   snippets: docs/SHEET-KIT.md. */
+
+/* ---- spec schedule ------------------------------------------------------------ */
+
+.schedule-scroll {
+  min-inline-size: 0;
+  max-inline-size: 100%;
+  overflow-x: auto;
+  overscroll-behavior-x: contain;
+  scrollbar-width: thin;
+}
+
+.schedule-scroll:focus-visible { outline-offset: 4px; }
+
+.schedule {
+  inline-size: 100%;
+  border-collapse: separate;
+  border-spacing: 0;
+  font-family: var(--font-data);
+  font-size: 0.8125rem;
+  line-height: 1.3;
+  font-variant-numeric: tabular-nums lining-nums;
+}
+
+.schedule caption small {
+  display: inline-block;
+  margin-inline-start: 0.75em;
+  color: var(--ink-3);
+  font-size: var(--fs-micro);
+  font-weight: 400;
+  letter-spacing: 0.02em;
+  text-transform: none;
+}
+
+.schedule thead th {
+  padding: 0 0.75rem 0.375rem;
+  text-align: start;
+  vertical-align: bottom;
+  white-space: nowrap;
+}
+
+.schedule .sym {
+  display: block;
+  margin-block-end: 3px;
+  color: var(--cyan);
+  font-size: 0.9375rem;
+  font-weight: 700;
+  letter-spacing: 0.02em;
+  text-transform: none;
+}
+
+.schedule-units > * {
+  padding: 0 0.75rem 0.5rem;
+  color: var(--ink-3);
+  font-size: var(--fs-label);
+  font-weight: 400;
+  letter-spacing: 0.04em;
+}
+
+.schedule thead tr:last-child > * { border-bottom: 1.5px solid var(--ink); }
+
+.schedule tbody :is(th, td) {
+  padding: 0.6875rem 0.75rem;
+  border-bottom: 1px solid var(--line);
+  background: var(--ms-ground);
+  white-space: nowrap;
+  transition: background-color 0.15s var(--ease-out);
+}
+
+.schedule tbody th {
+  font-family: var(--font-display);
+  font-size: 1rem;
+  font-weight: 600;
+  font-stretch: 88%;
+  letter-spacing: 0.01em;
+  text-align: start;
+}
+
+.schedule.is-compact :is(thead th, .schedule-units > *, tbody th, tbody td) {
+  padding-inline: 0.5rem;
+}
+
+.schedule.is-natural {
+  inline-size: auto;
+}
+
+.schedule .n { text-align: end; }
+.schedule .na { color: var(--ink-3); }
+
+.schedule :is(thead, tbody) :is(th, td):first-child {
+  position: sticky;
+  inset-inline-start: 0;
+  z-index: 1;
+  background: var(--ms-ground);
+  border-inline-end: 1px solid var(--line);
+}
+
+.schedule tbody tr:hover > * { background: var(--ms-panel); }
+
+.schedule tbody tr.is-chosen > *,
+.schedule tbody tr.is-chosen:hover > * {
+  background: var(--chosen-bg);
+  border-bottom-color: var(--cyan);
+}
+
+.schedule tbody tr:has(+ .is-chosen) > * { border-bottom-color: var(--cyan); }
+.schedule tbody tr.is-chosen th { color: var(--cyan); }
+
+.schedule-hint {
+  display: none;
+  align-items: center;
+  gap: var(--s-2);
+  margin-block-start: var(--s-2);
+  color: var(--ink-3);
+  font-size: var(--fs-micro);
+  letter-spacing: 0.02em;
+}
+
+/* Orientation glyph (sheet 07's authored mark): a capsule for a horizontal
+   tank, an upright for a vertical one. Pair it with the orientation word, set
+   .orient-name (shown on wide sheets) or .visually-hidden. */
+.orient {
+  display: inline-block;
+  flex: none;
+  inline-size: 18px;
+  block-size: 14px;
+  fill: none;
+  stroke: var(--ink-2);
+  stroke-width: 1.25;
+  vertical-align: -2px;
+}
+
+.schedule .s-type {
+  white-space: nowrap;
+}
+
+.schedule .s-type .orient {
+  margin-inline-end: 0.5rem;
+}
+
+/* Units line for the phone rows below: hidden where the units row shows. */
+.schedule caption .rows-units {
+  display: none;
+}
+
+/* ---- spec schedule as rows (narrow columns) ----------------------------------
+   .schedule.is-rows: when its column is narrower than the full table needs
+   (every phone, and the narrow main column on tablets), each model reads as
+   one two-line row, model and PE first, then a labelled strip of its
+   dimensions, so no column hides off-screen and nothing scrolls sideways; no
+   scroll hint is needed. Wider columns keep the desktop table. The same table
+   markup serves both: strip cells carry data-label (the dimension letter);
+   .s-pe is the PE cell and .s-type the orientation glyph cell (its word,
+   .orient-name, stays for screen readers). The scroller is the size container
+   queried; a sheet whose table is narrower opts out above the phone
+   breakpoint with `container: none`. */
+.schedule-scroll:has(> .schedule.is-rows) {
+  container: schedule-rows / inline-size;
+}
+
+@container schedule-rows (max-width: 41rem) {
+  .schedule-scroll > .schedule.is-rows,
+  .schedule-scroll > .schedule.is-rows tbody {
+    display: block;
+    min-inline-size: 0;
+  }
+
+  .schedule-scroll > .schedule.is-rows caption {
+    display: block;
+  }
+
+  /* Each source line on its own row. inline-block, not block, so the caption's
+     CAD underline stays on the title and does not run under these lines. */
+  .schedule-scroll > .schedule.is-rows caption small {
+    display: inline-block;
+    inline-size: 100%;
+    margin: var(--s-2) 0 0;
+    line-height: 1.4;
+  }
+
+  .schedule-scroll > .schedule.is-rows caption .rows-units {
+    margin-block-start: 2px;
+  }
+
+  .schedule-scroll > .schedule.is-rows thead {
+    position: absolute;
+    inline-size: 1px;
+    block-size: 1px;
+    overflow: hidden;
+    clip: rect(0 0 0 0);
+    white-space: nowrap;
+  }
+
+  .schedule-scroll > .schedule.is-rows tbody tr {
+    display: grid;
+    grid-template-columns: repeat(5, minmax(0, 1fr));
+    align-items: baseline;
+    column-gap: var(--s-2);
+    row-gap: 0.375rem;
+    padding: 0.625rem 0 0.75rem;
+    border-bottom: 1px solid var(--line);
+  }
+
+  .schedule-scroll > .schedule.is-rows tbody tr:first-child {
+    border-top: 1.5px solid var(--ink);
+  }
+
+  .schedule-scroll > .schedule.is-rows tbody :is(th, td) {
+    position: static;
+    padding: 0;
+    border: 0;
+    background: none;
+    text-align: start;
+  }
+
+  .schedule-scroll > .schedule.is-rows tbody th {
+    grid-row: 1;
+    grid-column: 1 / 3;
+    font-size: 1.0625rem;
+  }
+
+  .schedule-scroll > .schedule.is-rows tbody .s-type {
+    grid-row: 1;
+    grid-column: 3;
+    align-self: center;
+  }
+
+  .schedule-scroll > .schedule.is-rows .s-type .orient-name {
+    position: absolute;
+    inline-size: 1px;
+    block-size: 1px;
+    overflow: hidden;
+    clip: rect(0 0 0 0);
+    white-space: nowrap;
+  }
+
+  .schedule-scroll > .schedule.is-rows tbody .s-pe {
+    grid-row: 1;
+    grid-column: 4 / -1;
+    justify-self: end;
+    color: var(--ink);
+    font-size: 0.9375rem;
+    font-weight: 700;
+  }
+
+  .schedule-scroll > .schedule.is-rows tbody .s-pe::after {
+    content: " PE";
+    color: var(--ink-3);
+    font-size: var(--fs-label);
+    font-weight: 400;
+    letter-spacing: 0.08em;
+  }
+
+  .schedule-scroll > .schedule.is-rows tbody td[data-label] {
+    grid-row: 2;
+    color: var(--ink);
+    font-size: 0.8125rem;
+  }
+
+  .schedule-scroll > .schedule.is-rows tbody td[data-label]::before {
+    content: attr(data-label);
+    display: block;
+    margin-block-end: 2px;
+    color: var(--cyan);
+    font-size: var(--fs-label);
+    font-weight: 700;
+    letter-spacing: 0.04em;
+  }
+
+  .schedule-scroll > .schedule.is-rows tbody td.s-cap::before {
+    color: var(--ink-3);
+    font-weight: 400;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+  }
+
+  .schedule-scroll > .schedule.is-rows tbody td.na {
+    color: var(--ink-3);
+  }
+
+  .schedule-scroll > .schedule.is-rows tbody tr:hover > * {
+    background: none;
+  }
+}
+
+/* Very narrow columns (a tablet's main column): the five-figure strip tightens
+   so a five-digit capacity still fits its cell. */
+@container schedule-rows (max-width: 16rem) {
+  .schedule-scroll > .schedule.is-rows tbody tr {
+    column-gap: 0.25rem;
+  }
+
+  .schedule-scroll > .schedule.is-rows tbody td[data-label] {
+    font-size: 0.75rem;
+  }
+}
+
+/* Phones: a plain (non-.is-rows) schedule scrolls sideways, so say so. */
+@media (max-width: 720px) {
+  .schedule-hint { display: flex; }
+}

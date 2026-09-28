@@ -1,0 +1,16 @@
+/* Per-sheet styles, one file per sheet (01-12), each imported after the
+   shared engine/design layers so a sheet author never needs to touch
+   engine.css, design.css or another sheet's file. Files start empty; fill
+   in the one for the sheet you're authoring. */
+@import url("./slides/01.css");
+@import url("./slides/02.css");
+@import url("./slides/03.css");
+@import url("./slides/04.css");
+@import url("./slides/05.css");
+@import url("./slides/06.css");
+@import url("./slides/07.css");
+@import url("./slides/08.css");
+@import url("./slides/09.css");
+@import url("./slides/10.css");
+@import url("./slides/11.css");
+@import url("./slides/12.css");

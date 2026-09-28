@@ -1,0 +1,607 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Sheet Kit Preview</title>
+<meta name="description" content="Visual preview of the drawing-sheet kit for the Lintang Tankworks Phase 1 concept deck, set with its sample model data. Portfolio concept. Fictional manufacturer, sample data.">
+<meta name="robots" content="noindex">
+<link rel="stylesheet" href="../../src/css/design.css">
+<style>
+  /* Preview-page layout only. The title block is fixed in the deck; here it is
+     pinned inside a 1440 x 900 (or phone-height) stage so both states show. */
+  .kit { max-inline-size: 1320px; margin: 0 auto; padding: 56px 40px 140px; }
+  .kit-head { display: grid; gap: 20px; padding-block-end: 56px; }
+  .kit-head h1 { margin: 0; }
+  .kit-stage { position: relative; block-size: 900px; margin-inline: calc(50% - 50vw); overflow: hidden; border-block: 1px solid var(--line-2); }
+  .kit-stage .slide { block-size: 100%; min-block-size: 0; }
+  .kit-stage .sheet-grid { block-size: 100%; min-block-size: 0; }
+  .kit-stage .titleblock { position: absolute; }
+  .kit-section { display: grid; grid-template-columns: minmax(0, 1fr); gap: 28px; padding-block: 64px 0; }
+  .kit-section > header { display: grid; gap: 10px; padding-block-end: 20px; border-bottom: 1px solid var(--line); }
+  .kit-section > header h2 { margin: 0; font-size: clamp(1.75rem, 1.2rem + 1.6vw, 2.5rem); }
+  .kit-section > header p { color: var(--ink-3); font-size: 0.8125rem; }
+  .kit-section code { color: var(--ink); font-family: var(--font-data); font-size: 0.8125rem; }
+  .kit-cols { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(30rem, 100%), 1fr)); gap: 56px; align-items: start; }
+  .kit-stack { display: grid; grid-template-columns: minmax(0, 1fr); gap: 28px; align-content: start; }
+  .kit-legend { max-inline-size: 64rem; }
+  .kit-row { display: flex; flex-wrap: wrap; gap: 14px; align-items: center; }
+  .kit-dialogs { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(34rem, 100%), 1fr)); gap: 40px; align-items: start; }
+  .kit-dialogs dialog { position: static; inset: auto; display: block; inline-size: auto; max-block-size: none; margin: 0; animation: none; }
+  @media (max-width: 720px) {
+    .kit { padding: 32px 16px 96px; }
+    .kit-stage { block-size: 844px; }
+    .kit-section { padding-block-start: 48px; }
+    .kit-dialogs dialog { border-width: 1.5px; }
+  }
+</style>
+</head>
+<body>
+<svg class="dwg-defs" aria-hidden="true" focusable="false" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <!-- ANSI31: 45 degree section hatch for cut tank walls -->
+    <pattern id="hatch-ansi31" width="6" height="6" patternUnits="userSpaceOnUse" patternTransform="rotate(45)">
+      <line x1="0" y1="0" x2="0" y2="6" stroke="#e8ecef" stroke-opacity="0.6" stroke-width="1" />
+    </pattern>
+    <!-- Earth: sparse opposite diagonal -->
+    <pattern id="hatch-soil" width="14" height="14" patternUnits="userSpaceOnUse" patternTransform="rotate(-45)">
+      <line x1="0" y1="0" x2="0" y2="7" stroke="#e8ecef" stroke-opacity="0.22" stroke-width="1" />
+    </pattern>
+    <!-- AR-SAND stipple: bedding and backfill -->
+    <pattern id="hatch-sand" width="16" height="16" patternUnits="userSpaceOnUse">
+      <circle cx="2" cy="3" r="0.9" fill="#e8ecef" fill-opacity="0.55" />
+      <circle cx="9" cy="1.5" r="0.7" fill="#e8ecef" fill-opacity="0.45" />
+      <circle cx="13" cy="7" r="0.9" fill="#e8ecef" fill-opacity="0.55" />
+      <circle cx="5" cy="10" r="0.7" fill="#e8ecef" fill-opacity="0.45" />
+      <circle cx="11" cy="13" r="0.9" fill="#e8ecef" fill-opacity="0.5" />
+      <circle cx="1" cy="15" r="0.6" fill="#e8ecef" fill-opacity="0.4" />
+    </pattern>
+    <!-- AR-CONC: concrete base and slab -->
+    <pattern id="hatch-concrete" width="22" height="22" patternUnits="userSpaceOnUse">
+      <circle cx="4" cy="5" r="1" fill="#e8ecef" fill-opacity="0.5" />
+      <circle cx="15" cy="16" r="1.1" fill="#e8ecef" fill-opacity="0.5" />
+      <circle cx="18" cy="4" r="0.7" fill="#e8ecef" fill-opacity="0.4" />
+      <path d="M7 14 l4 -2 l1 4 z" fill="none" stroke="#e8ecef" stroke-opacity="0.5" stroke-width="0.8" />
+      <path d="M13 6 l3 3 l-4 1 z" fill="none" stroke="#e8ecef" stroke-opacity="0.45" stroke-width="0.8" />
+    </pattern>
+    <!-- Plastic bio-media rings -->
+    <pattern id="hatch-media" width="11" height="11" patternUnits="userSpaceOnUse">
+      <circle cx="3" cy="3" r="2.4" fill="none" stroke="#e8ecef" stroke-opacity="0.55" stroke-width="0.9" />
+      <circle cx="8.5" cy="8.5" r="2.4" fill="none" stroke="#e8ecef" stroke-opacity="0.55" stroke-width="0.9" />
+    </pattern>
+    <!-- Architectural dimension tick -->
+    <marker id="mk-tick" viewBox="0 0 10 10" refX="5" refY="5" markerWidth="9" markerHeight="9" markerUnits="userSpaceOnUse" orient="auto">
+      <path d="M2 8 L8 2" stroke="#3dd6e0" stroke-width="1.4" />
+    </marker>
+    <!-- Flow arrowhead (water) -->
+    <marker id="mk-flow" viewBox="0 0 10 10" refX="7" refY="5" markerWidth="9" markerHeight="9" markerUnits="userSpaceOnUse" orient="auto-start-reverse">
+      <path d="M0 1 L10 5 L0 9 z" fill="#f2d14b" />
+    </marker>
+    <!-- Leader terminator -->
+    <marker id="mk-dot" viewBox="0 0 6 6" refX="3" refY="3" markerWidth="5" markerHeight="5" markerUnits="userSpaceOnUse">
+      <circle cx="3" cy="3" r="2.4" fill="#b7bec5" />
+    </marker>
+  </defs>
+</svg>
+<div class="kit">
+  <header class="kit-head">
+    <div class="brand">
+      <span class="wordmark">Lintang Tankworks</span>
+      <span class="brand-rule" aria-hidden="true"></span>
+      <span class="tagline">Septic and sewage systems in PE and FRP</span>
+    </div>
+    <h1>Sheet kit</h1>
+    <p class="lede"><b>Phase 1 deck, 12 sheets.</b> Every component below is set with the sample model data in <code>src/data/products.json</code>. Portfolio concept. Fictional manufacturer, sample data.</p>
+  </header>
+
+  <section class="kit-stage" aria-label="Sheet 06 of 12, composed with the title block">
+    <section class="slide is-active" data-slide data-title="FRP Bio-Filter septic tank" aria-labelledby="s06-title">
+      <div class="sheet-grid">
+        <div class="sheet-main">
+          <header class="sheet-head">
+            <h2 id="s06-title">FRP Bio-Filter septic tank</h2>
+            <p class="lede"><b>8 to 30 PE.</b> Fibreglass reinforced polyester tank with upflow anaerobic filtration through bio-media. No power on site. Certified to MS&nbsp;2441-1:2012, sample licence SAMPLE-FRP-02.</p>
+          </header>
+          <figure class="dwg-figure is-split sheet-foot">
+            <svg class="dwg" viewBox="0 0 640 384" role="img" aria-labelledby="dwg-a-t">
+      <title id="dwg-a-t">Typical section through an FRP Bio-Filter septic tank (LF-20V) in fine-sand bedding on a concrete base: inlet, settling side, bio-media on the upflow side, outlet at top water level. D 2050, H1 2170, H2 1820 millimetres; invert levels to be confirmed.</title>
+      <g data-layer="ground">
+        <path class="ly-soil" fill-rule="evenodd" d="M0 60H640V384H0Z M185 60L195 334H445L455 60Z"/>
+        <path class="ly-sand" fill-rule="evenodd" d="M185 60L195 334H445L455 60Z M234 90H290V60H350V90H406A14 14 0 0 1 420 104V306A14 14 0 0 1 406 320H234A14 14 0 0 1 220 306V104A14 14 0 0 1 234 90Z M205 320H435V334H205Z"/>
+        <rect class="ly-concrete" x="205" y="320" width="230" height="14"/>
+        <path class="ly-ground" d="M0 60H282M358 60H640"/>
+        <g class="ly-balloon"><circle cx="482" cy="292" r="11"/><text x="482" y="292">4</text></g>
+        <path class="ly-leader" d="M471 292H440"/>
+        <text class="ly-note" x="500" y="296">FINE-SAND BEDDING</text>
+      </g>
+      <g data-layer="shell">
+        <path class="ly-wall-hatch" fill-rule="evenodd" d="M234 90H290V60H350V90H406A14 14 0 0 1 420 104V306A14 14 0 0 1 406 320H234A14 14 0 0 1 220 306V104A14 14 0 0 1 234 90Z M236 97H296V60H344V97H404A9 9 0 0 1 413 106V304A9 9 0 0 1 404 313H236A9 9 0 0 1 227 304V106A9 9 0 0 1 236 97Z"/>
+        <path class="ly-wall" d="M234 90H290V60H350V90H406A14 14 0 0 1 420 104V306A14 14 0 0 1 406 320H234A14 14 0 0 1 220 306V104A14 14 0 0 1 234 90Z"/>
+        <path class="ly-wall" d="M296 60V97H236A9 9 0 0 0 227 106V304A9 9 0 0 0 236 313H404A9 9 0 0 0 413 304V106A9 9 0 0 0 404 97H344V60"/>
+        <rect class="ly-wall-hatch" x="316" y="97" width="6" height="183"/>
+        <rect class="ly-wall" x="316" y="97" width="6" height="183"/>
+        <rect class="ly-wall-hatch" x="282" y="52" width="76" height="8"/>
+        <rect class="ly-wall" x="282" y="52" width="76" height="8"/>
+        <path class="ly-wall" d="M40 100H254V165M40 115H240V165M413 105H600M413 120H600"/>
+        <g class="ly-balloon"><circle cx="482" cy="214" r="11"/><text x="482" y="214">1</text></g>
+        <path class="ly-leader" d="M471 214H421"/>
+        <text class="ly-note" x="500" y="218">FRP TANK SHELL</text>
+      </g>
+      <g data-layer="media">
+        <rect class="ly-media" x="322" y="172" width="91" height="96"/>
+        <path class="ly-steel" d="M322 172H413M322 268H413"/>
+        <g class="ly-balloon"><circle cx="482" cy="248" r="11"/><text x="482" y="248">3</text></g>
+        <path class="ly-leader" d="M471 248H402"/>
+        <text class="ly-note" x="500" y="252">BIO-MEDIA</text>
+      </g>
+      <g data-layer="water">
+        <rect class="ly-water" x="227" y="120" width="186" height="193"/>
+        <path class="ly-waterline" d="M229 120H411"/>
+        <path class="ly-waterline" d="M262 111h12l-6 8z"/>
+        <text class="ly-note" x="279" y="117">TWL</text>
+        <path class="ly-flow" d="M60 107.5H170"/>
+        <path class="ly-flow" d="M247 128V160"/>
+        <path class="ly-flow" d="M272 196C272 284 300 298 348 298"/>
+        <path class="ly-flow" d="M372 290V160"/>
+        <path class="ly-flow" d="M436 112.5H566"/>
+        <g class="ly-balloon"><circle cx="482" cy="180" r="11"/><text x="482" y="180">2</text></g>
+        <path class="ly-leader" d="M471 180L404 128"/>
+        <text class="ly-note" x="500" y="184">TOP WATER LEVEL</text>
+      </g>
+      <g data-layer="dims">
+        <path class="ly-dim-ext" d="M220 324V374M420 324V374M216 90H134M216 320H134M216 120H174"/>
+        <path class="ly-dim" d="M220 368H420"/>
+        <path class="ly-dim" d="M142 90V320"/>
+        <path class="ly-dim" d="M182 120V320"/>
+        <text class="ly-dim-text" x="320" y="361" text-anchor="middle">D 2050</text>
+        <text class="ly-dim-text" transform="translate(134 205) rotate(-90)" text-anchor="middle">H1 2170</text>
+        <text class="ly-dim-text" transform="translate(174 220) rotate(-90)" text-anchor="middle">H2 1820</text>
+      </g>
+      <g data-layer="refs">
+        <path class="ly-center" d="M320 28V352"/>
+        <path class="ly-invert" d="M74 125H86L80 115Z"/>
+        <text class="ly-note" x="80" y="142" text-anchor="middle">INLET IL</text>
+        <text class="ly-note" x="80" y="156" text-anchor="middle">TBC</text>
+        <path class="ly-invert" d="M554 130H566L560 120Z"/>
+        <text class="ly-note" x="560" y="147" text-anchor="middle">OUTLET IL</text>
+        <text class="ly-note" x="560" y="161" text-anchor="middle">TBC</text>
+      </g>
+    </svg>
+            <div class="legend" role="group" aria-label="Isolate a layer in the section">
+              <button class="legend-item" type="button" aria-pressed="false" data-isolate="shell"><span class="balloon">1</span>Tank shell</button>
+              <button class="legend-item" type="button" aria-pressed="false" data-isolate="water"><span class="balloon">2</span>Water and flow</button>
+              <button class="legend-item" type="button" aria-pressed="false" data-isolate="media"><span class="balloon">3</span>Bio-media</button>
+              <button class="legend-item" type="button" aria-pressed="false" data-isolate="ground"><span class="balloon">4</span>Bedding and base</button>
+            </div>
+            <figcaption class="view-title">
+              <span class="view-bubble" aria-hidden="true"><span>A</span><span>06</span></span>
+              <span class="view-name">Typical section: LF-20V</span>
+              <span class="view-sub">Illustrative, not to scale. Dimensions in mm.</span>
+            </figcaption>
+          </figure>
+        </div>
+        <div class="sheet-side">
+          <section class="schedule-scroll" data-scroll-x data-no-swipe tabindex="0" aria-label="FRP Bio-Filter schedule">
+            <table class="schedule is-compact">
+              <caption>Schedule: FRP Bio-Filter <small>mm, capacity in litres</small></caption>
+              <thead>
+                <tr><th scope="col">Model</th><th scope="col" class="n">PE</th><th scope="col" class="n"><span class="sym">D</span>Dia.</th><th scope="col" class="n"><span class="sym">H1</span>Height</th><th scope="col" class="n"><span class="sym">H2</span>Water</th><th scope="col" class="n">Cap.</th></tr>
+              </thead>
+              <tbody>
+                <tr><th scope="row">LF-8H</th><td class="n">8</td><td class="n">1500</td><td class="n">1500</td><td class="n">1200</td><td class="n">3360</td></tr>
+                <tr><th scope="row">LF-8V</th><td class="n">8</td><td class="n">1650</td><td class="n">1930</td><td class="n">1580</td><td class="n">3380</td></tr>
+                <tr><th scope="row">LF-15H</th><td class="n">15</td><td class="n">1550</td><td class="n">1550</td><td class="n">1250</td><td class="n">4910</td></tr>
+                <tr><th scope="row">LF-15V</th><td class="n">15</td><td class="n">1900</td><td class="n">2080</td><td class="n">1730</td><td class="n">4910</td></tr>
+                <tr class="is-chosen"><th scope="row">LF-20V<span class="visually-hidden"> (recommended for 20 PE)</span></th><td class="n">20</td><td class="n">2050</td><td class="n">2170</td><td class="n">1820</td><td class="n">6010</td></tr>
+                <tr><th scope="row">LF-28H</th><td class="n">28</td><td class="n">1700</td><td class="n">1700</td><td class="n">1400</td><td class="n">7780</td></tr>
+                <tr><th scope="row">LF-30H</th><td class="n">30</td><td class="n">1700</td><td class="n">1700</td><td class="n">1400</td><td class="n">8220</td></tr>
+              </tbody>
+            </table>
+          </section>
+          <dl class="keyfacts">
+            <div><dt>Pipe</dt><dd><span class="dim">150 mm</span> inlet and outlet</dd></div>
+            <div><dt>Warranty</dt><dd>5 years</dd></div>
+            <div><dt>Licence</dt><dd>SAMPLE-FRP-02<span class="sample-tag">Sample</span></dd></div>
+          </dl>
+        </div>
+      </div>
+    </section>
+    <aside class="titleblock" data-chrome aria-label="Title block and deck controls">
+      <div class="tb-cell tb-co"><span class="tb-lbl">Company</span><span class="tb-v"><span class="wordmark">Lintang Tankworks</span><span class="tb-sub">Group of Company</span></span></div>
+      <div class="tb-cell tb-title"><span class="tb-lbl">Drawing title</span><span class="tb-v" data-sheet-title>FRP Bio-Filter septic tank</span></div>
+      <dl class="tb-meta">
+        <div><dt>Drg no.</dt><dd data-drg>WW-P1-06</dd></div>
+        <div><dt>Rev</dt><dd>A</dd></div>
+        <div><dt>Scale</dt><dd>NTS</dd></div>
+        <div class="tb-sheet"><dt>Sheet</dt><dd data-counter>06<span class="of">of</span>12</dd></div>
+      </dl>
+      <p class="tb-cell tb-notice">Portfolio concept. Fictional manufacturer, sample data.</p>
+      <nav class="tb-keys" aria-label="Deck controls">
+        <button class="tb-key" type="button" data-action="menu" aria-haspopup="dialog" aria-controls="deck-menu"><kbd class="tb-desk">G</kbd><svg class="ico tb-touch" viewBox="0 0 16 16" aria-hidden="true"><path d="M2.5 2.5h4.5v4.5H2.5zM9 2.5h4.5v4.5H9zM2.5 9h4.5v4.5H2.5zM9 9h4.5v4.5H9z"/></svg><span>Sheet index</span></button>
+        <button class="tb-key" type="button" data-action="fullscreen" aria-pressed="false"><kbd>F</kbd><span>Fullscreen</span></button>
+        <button class="tb-key tb-prev" type="button" data-action="prev" data-end-prev aria-label="Previous sheet"><span class="tb-pill"><svg class="ico" viewBox="0 0 16 16" aria-hidden="true"><path d="M13 8H3M7 4L3 8l4 4"/></svg></span><span class="tb-touch">Prev</span></button>
+        <button class="tb-key tb-next" type="button" data-action="next" data-end-next aria-label="Next sheet"><span class="tb-next-label">Next</span><span class="tb-first-label">Back to 01</span><span class="tb-pill"><svg class="ico tb-next-ico" viewBox="0 0 16 16" aria-hidden="true"><path d="M3 8h10M9 4l4 4-4 4"/></svg><svg class="ico tb-first-ico" viewBox="0 0 16 16" aria-hidden="true"><path d="M3.5 3v10M13 8H6.5M9.5 5l-3 3 3 3"/></svg></span></button>
+      </nav>
+      <button class="tb-qr" type="button" data-action="share" aria-haspopup="dialog" aria-controls="deck-share" aria-label="Tap to share this deck">
+        <span data-qr-mini><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 29 29" role="img" aria-label="QR code" shape-rendering="crispEdges"><path d="M0 0h1v1h-1zM1 0h1v1h-1zM2 0h1v1h-1zM3 0h1v1h-1zM4 0h1v1h-1zM5 0h1v1h-1zM6 0h1v1h-1zM8 0h1v1h-1zM10 0h1v1h-1zM13 0h1v1h-1zM14 0h1v1h-1zM15 0h1v1h-1zM18 0h1v1h-1zM22 0h1v1h-1zM23 0h1v1h-1zM24 0h1v1h-1zM25 0h1v1h-1zM26 0h1v1h-1zM27 0h1v1h-1zM28 0h1v1h-1zM0 1h1v1h-1zM6 1h1v1h-1zM8 1h1v1h-1zM9 1h1v1h-1zM10 1h1v1h-1zM13 1h1v1h-1zM14 1h1v1h-1zM15 1h1v1h-1zM19 1h1v1h-1zM22 1h1v1h-1zM28 1h1v1h-1zM0 2h1v1h-1zM2 2h1v1h-1zM3 2h1v1h-1zM4 2h1v1h-1zM6 2h1v1h-1zM8 2h1v1h-1zM9 2h1v1h-1zM10 2h1v1h-1zM11 2h1v1h-1zM12 2h1v1h-1zM13 2h1v1h-1zM14 2h1v1h-1zM20 2h1v1h-1zM22 2h1v1h-1zM24 2h1v1h-1zM25 2h1v1h-1zM26 2h1v1h-1zM28 2h1v1h-1zM0 3h1v1h-1zM2 3h1v1h-1zM3 3h1v1h-1zM4 3h1v1h-1zM6 3h1v1h-1zM14 3h1v1h-1zM15 3h1v1h-1zM17 3h1v1h-1zM18 3h1v1h-1zM19 3h1v1h-1zM20 3h1v1h-1zM22 3h1v1h-1zM24 3h1v1h-1zM25 3h1v1h-1zM26 3h1v1h-1zM28 3h1v1h-1zM0 4h1v1h-1zM2 4h1v1h-1zM3 4h1v1h-1zM4 4h1v1h-1zM6 4h1v1h-1zM8 4h1v1h-1zM9 4h1v1h-1zM10 4h1v1h-1zM13 4h1v1h-1zM15 4h1v1h-1zM18 4h1v1h-1zM19 4h1v1h-1zM22 4h1v1h-1zM24 4h1v1h-1zM25 4h1v1h-1zM26 4h1v1h-1zM28 4h1v1h-1zM0 5h1v1h-1zM6 5h1v1h-1zM9 5h1v1h-1zM10 5h1v1h-1zM13 5h1v1h-1zM14 5h1v1h-1zM20 5h1v1h-1zM22 5h1v1h-1zM28 5h1v1h-1zM0 6h1v1h-1zM1 6h1v1h-1zM2 6h1v1h-1zM3 6h1v1h-1zM4 6h1v1h-1zM5 6h1v1h-1zM6 6h1v1h-1zM8 6h1v1h-1zM10 6h1v1h-1zM12 6h1v1h-1zM14 6h1v1h-1zM16 6h1v1h-1zM18 6h1v1h-1zM20 6h1v1h-1zM22 6h1v1h-1zM23 6h1v1h-1zM24 6h1v1h-1zM25 6h1v1h-1zM26 6h1v1h-1zM27 6h1v1h-1zM28 6h1v1h-1zM14 7h1v1h-1zM18 7h1v1h-1zM20 7h1v1h-1zM0 8h1v1h-1zM3 8h1v1h-1zM4 8h1v1h-1zM5 8h1v1h-1zM6 8h1v1h-1zM7 8h1v1h-1zM8 8h1v1h-1zM10 8h1v1h-1zM13 8h1v1h-1zM14 8h1v1h-1zM15 8h1v1h-1zM16 8h1v1h-1zM17 8h1v1h-1zM19 8h1v1h-1zM21 8h1v1h-1zM24 8h1v1h-1zM26 8h1v1h-1zM27 8h1v1h-1zM28 8h1v1h-1zM0 9h1v1h-1zM3 9h1v1h-1zM10 9h1v1h-1zM14 9h1v1h-1zM17 9h1v1h-1zM18 9h1v1h-1zM19 9h1v1h-1zM23 9h1v1h-1zM24 9h1v1h-1zM26 9h1v1h-1zM27 9h1v1h-1zM0 10h1v1h-1zM3 10h1v1h-1zM4 10h1v1h-1zM5 10h1v1h-1zM6 10h1v1h-1zM7 10h1v1h-1zM9 10h1v1h-1zM10 10h1v1h-1zM11 10h1v1h-1zM14 10h1v1h-1zM17 10h1v1h-1zM20 10h1v1h-1zM22 10h1v1h-1zM23 10h1v1h-1zM26 10h1v1h-1zM3 11h1v1h-1zM4 11h1v1h-1zM7 11h1v1h-1zM14 11h1v1h-1zM15 11h1v1h-1zM17 11h1v1h-1zM19 11h1v1h-1zM20 11h1v1h-1zM21 11h1v1h-1zM22 11h1v1h-1zM25 11h1v1h-1zM28 11h1v1h-1zM0 12h1v1h-1zM1 12h1v1h-1zM2 12h1v1h-1zM3 12h1v1h-1zM6 12h1v1h-1zM8 12h1v1h-1zM9 12h1v1h-1zM10 12h1v1h-1zM13 12h1v1h-1zM14 12h1v1h-1zM20 12h1v1h-1zM22 12h1v1h-1zM23 12h1v1h-1zM28 12h1v1h-1zM1 13h1v1h-1zM3 13h1v1h-1zM5 13h1v1h-1zM7 13h1v1h-1zM8 13h1v1h-1zM9 13h1v1h-1zM12 13h1v1h-1zM17 13h1v1h-1zM20 13h1v1h-1zM21 13h1v1h-1zM22 13h1v1h-1zM24 13h1v1h-1zM25 13h1v1h-1zM26 13h1v1h-1zM27 13h1v1h-1zM28 13h1v1h-1zM0 14h1v1h-1zM1 14h1v1h-1zM6 14h1v1h-1zM7 14h1v1h-1zM9 14h1v1h-1zM12 14h1v1h-1zM14 14h1v1h-1zM15 14h1v1h-1zM18 14h1v1h-1zM19 14h1v1h-1zM22 14h1v1h-1zM23 14h1v1h-1zM26 14h1v1h-1zM28 14h1v1h-1zM2 15h1v1h-1zM3 15h1v1h-1zM4 15h1v1h-1zM7 15h1v1h-1zM8 15h1v1h-1zM11 15h1v1h-1zM12 15h1v1h-1zM13 15h1v1h-1zM14 15h1v1h-1zM16 15h1v1h-1zM21 15h1v1h-1zM22 15h1v1h-1zM23 15h1v1h-1zM24 15h1v1h-1zM26 15h1v1h-1zM28 15h1v1h-1zM3 16h1v1h-1zM4 16h1v1h-1zM5 16h1v1h-1zM6 16h1v1h-1zM8 16h1v1h-1zM9 16h1v1h-1zM12 16h1v1h-1zM15 16h1v1h-1zM18 16h1v1h-1zM25 16h1v1h-1zM0 17h1v1h-1zM3 17h1v1h-1zM5 17h1v1h-1zM10 17h1v1h-1zM12 17h1v1h-1zM18 17h1v1h-1zM19 17h1v1h-1zM20 17h1v1h-1zM24 17h1v1h-1zM26 17h1v1h-1zM27 17h1v1h-1zM0 18h1v1h-1zM1 18h1v1h-1zM4 18h1v1h-1zM5 18h1v1h-1zM6 18h1v1h-1zM8 18h1v1h-1zM9 18h1v1h-1zM10 18h1v1h-1zM13 18h1v1h-1zM14 18h1v1h-1zM16 18h1v1h-1zM19 18h1v1h-1zM20 18h1v1h-1zM21 18h1v1h-1zM25 18h1v1h-1zM28 18h1v1h-1zM0 19h1v1h-1zM1 19h1v1h-1zM2 19h1v1h-1zM8 19h1v1h-1zM9 19h1v1h-1zM11 19h1v1h-1zM13 19h1v1h-1zM15 19h1v1h-1zM16 19h1v1h-1zM19 19h1v1h-1zM21 19h1v1h-1zM23 19h1v1h-1zM24 19h1v1h-1zM25 19h1v1h-1zM26 19h1v1h-1zM0 20h1v1h-1zM1 20h1v1h-1zM2 20h1v1h-1zM6 20h1v1h-1zM7 20h1v1h-1zM8 20h1v1h-1zM13 20h1v1h-1zM18 20h1v1h-1zM19 20h1v1h-1zM20 20h1v1h-1zM21 20h1v1h-1zM22 20h1v1h-1zM23 20h1v1h-1zM24 20h1v1h-1zM25 20h1v1h-1zM26 20h1v1h-1zM27 20h1v1h-1zM8 21h1v1h-1zM9 21h1v1h-1zM13 21h1v1h-1zM16 21h1v1h-1zM17 21h1v1h-1zM18 21h1v1h-1zM19 21h1v1h-1zM20 21h1v1h-1zM24 21h1v1h-1zM25 21h1v1h-1zM0 22h1v1h-1zM1 22h1v1h-1zM2 22h1v1h-1zM3 22h1v1h-1zM4 22h1v1h-1zM5 22h1v1h-1zM6 22h1v1h-1zM8 22h1v1h-1zM9 22h1v1h-1zM10 22h1v1h-1zM11 22h1v1h-1zM13 22h1v1h-1zM15 22h1v1h-1zM16 22h1v1h-1zM19 22h1v1h-1zM20 22h1v1h-1zM22 22h1v1h-1zM24 22h1v1h-1zM25 22h1v1h-1zM0 23h1v1h-1zM6 23h1v1h-1zM8 23h1v1h-1zM10 23h1v1h-1zM11 23h1v1h-1zM12 23h1v1h-1zM13 23h1v1h-1zM16 23h1v1h-1zM18 23h1v1h-1zM19 23h1v1h-1zM20 23h1v1h-1zM24 23h1v1h-1zM27 23h1v1h-1zM0 24h1v1h-1zM2 24h1v1h-1zM3 24h1v1h-1zM4 24h1v1h-1zM6 24h1v1h-1zM8 24h1v1h-1zM9 24h1v1h-1zM10 24h1v1h-1zM13 24h1v1h-1zM15 24h1v1h-1zM16 24h1v1h-1zM17 24h1v1h-1zM19 24h1v1h-1zM20 24h1v1h-1zM21 24h1v1h-1zM22 24h1v1h-1zM23 24h1v1h-1zM24 24h1v1h-1zM25 24h1v1h-1zM27 24h1v1h-1zM0 25h1v1h-1zM2 25h1v1h-1zM3 25h1v1h-1zM4 25h1v1h-1zM6 25h1v1h-1zM8 25h1v1h-1zM14 25h1v1h-1zM16 25h1v1h-1zM18 25h1v1h-1zM20 25h1v1h-1zM21 25h1v1h-1zM23 25h1v1h-1zM27 25h1v1h-1zM0 26h1v1h-1zM2 26h1v1h-1zM3 26h1v1h-1zM4 26h1v1h-1zM6 26h1v1h-1zM11 26h1v1h-1zM12 26h1v1h-1zM13 26h1v1h-1zM16 26h1v1h-1zM18 26h1v1h-1zM19 26h1v1h-1zM21 26h1v1h-1zM23 26h1v1h-1zM24 26h1v1h-1zM26 26h1v1h-1zM27 26h1v1h-1zM28 26h1v1h-1zM0 27h1v1h-1zM6 27h1v1h-1zM9 27h1v1h-1zM10 27h1v1h-1zM11 27h1v1h-1zM12 27h1v1h-1zM13 27h1v1h-1zM15 27h1v1h-1zM21 27h1v1h-1zM22 27h1v1h-1zM23 27h1v1h-1zM25 27h1v1h-1zM26 27h1v1h-1zM28 27h1v1h-1zM0 28h1v1h-1zM1 28h1v1h-1zM2 28h1v1h-1zM3 28h1v1h-1zM4 28h1v1h-1zM5 28h1v1h-1zM6 28h1v1h-1zM8 28h1v1h-1zM9 28h1v1h-1zM11 28h1v1h-1zM12 28h1v1h-1zM14 28h1v1h-1zM16 28h1v1h-1zM17 28h1v1h-1zM18 28h1v1h-1zM19 28h1v1h-1zM20 28h1v1h-1zM21 28h1v1h-1zM22 28h1v1h-1zM24 28h1v1h-1zM25 28h1v1h-1z" fill="#000000"/></svg></span>
+        <span class="tb-qr-cap"><span class="tb-qr-scan">Scan to open<br></span><b>Tap to share</b></span>
+        <svg class="ico tb-touch" viewBox="0 0 16 16" aria-hidden="true"><circle cx="12" cy="3.5" r="1.8"/><circle cx="4" cy="8" r="1.8"/><circle cx="12" cy="12.5" r="1.8"/><path d="M5.6 7.1l4.8-2.7M5.6 8.9l4.8 2.7"/></svg><span class="tb-touch">Share</span>
+      </button>
+      <div class="tb-progress" data-progress aria-hidden="true"></div>
+    </aside>
+  </section>
+
+  <section class="kit-section" aria-labelledby="k-type">
+    <header><h2 id="k-type">Type</h2><p>Archivo at 72% for titles, 125% for the wordmark; B612 for notes, data and body copy. <code>base.css</code></p></header>
+    <div class="kit-cols">
+      <div>
+        <h3>PE Bio-Filter septic tank</h3>
+        <p class="lede"><b>6 to 18 PE.</b> Rotomolded polyethylene tank, upflow anaerobic filtration through bio-media, no power needed.</p>
+        <p>Body copy runs in B612 at a 70 character measure. Each figure on a sheet is sample data from <code>src/data/products.json</code>; see <a href="../../docs/SOURCES.md">the sources note</a> for what is sample and what is a real public standard. Press <kbd>G</kbd> for the sheet index and <kbd>F</kbd> for fullscreen.</p>
+        <h4>Heading four, field style</h4>
+        <p>Headings carry more space above than below, so each one belongs to the text that follows it.</p>
+      </div>
+      <div class="kit-stack">
+        <p class="kit-row"><span class="dimstring">6–18<small>PE</small></span><span class="dimstring">8–30<small>PE</small></span><span class="dimstring">40–150<small>PE</small></span></p>
+        <section class="notes" aria-labelledby="k-notes">
+          <h3 class="notes-title" id="k-notes">Notes</h3>
+          <ol>
+            <li>Illustrative typical section, not to scale.</li>
+            <li>Dimensions in millimetres, from the sample model schedule.</li>
+            <li>Invert levels (IL) per site: TBC.</li>
+            <li>Fine-sand bedding recommended.</li>
+          </ol>
+        </section>
+      </div>
+    </div>
+  </section>
+
+  <section class="kit-section" aria-labelledby="k-schedule">
+    <header><h2 id="k-schedule">Spec schedule</h2><p><code>.schedule</code> in <code>.schedule-scroll</code>: units row, tabular figures, sticky model column, chosen row in cyan.</p></header>
+    <div>
+      <section class="schedule-scroll" data-scroll-x data-no-swipe tabindex="0" aria-label="PE Bio-Filter schedule, scrolls sideways">
+        <table class="schedule is-natural">
+          <caption>Schedule: PE Bio-Filter septic tank <small>MS 2441-1:2012, sample licence SAMPLE-PE-01</small></caption>
+          <thead>
+            <tr><th scope="col">Model</th><th scope="col" class="n">PE</th><th scope="col">Orientation</th><th scope="col" class="n"><span class="sym">D</span>Diameter</th><th scope="col" class="n"><span class="sym">L</span>Length</th><th scope="col" class="n"><span class="sym">H1</span>Height</th><th scope="col" class="n"><span class="sym">H2</span>Water level</th><th scope="col" class="n">Capacity</th></tr>
+            <tr class="schedule-units"><td></td><td></td><td></td><td class="n">mm</td><td class="n">mm</td><td class="n">mm</td><td class="n">mm</td><td class="n">L</td></tr>
+          </thead>
+          <tbody>
+            <tr><th scope="row">LP-6H</th><td class="n">6</td><td>Horizontal</td><td class="n">1300</td><td class="n">2550</td><td class="n">1300</td><td class="n">1050</td><td class="n">2930</td></tr>
+            <tr><th scope="row">LP-6V</th><td class="n">6</td><td>Vertical</td><td class="n">1550</td><td class="n na">–</td><td class="n">1850</td><td class="n">1550</td><td class="n">2920</td></tr>
+            <tr><th scope="row">LP-8</th><td class="n">8</td><td>Vertical</td><td class="n">1600</td><td class="n na">–</td><td class="n">1980</td><td class="n">1680</td><td class="n">3380</td></tr>
+            <tr><th scope="row">LP-10</th><td class="n">10</td><td>Vertical</td><td class="n">1650</td><td class="n na">–</td><td class="n">2080</td><td class="n">1780</td><td class="n">3810</td></tr>
+            <tr class="is-chosen"><th scope="row">LP-12<span class="visually-hidden"> (recommended for 12 PE)</span></th><td class="n">12</td><td>Vertical</td><td class="n">1700</td><td class="n na">–</td><td class="n">2170</td><td class="n">1870</td><td class="n">4240</td></tr>
+            <tr><th scope="row">LP-15</th><td class="n">15</td><td>Vertical</td><td class="n">1800</td><td class="n na">–</td><td class="n">2230</td><td class="n">1930</td><td class="n">4910</td></tr>
+            <tr><th scope="row">LP-18</th><td class="n">18</td><td>Vertical</td><td class="n">1850</td><td class="n na">–</td><td class="n">2370</td><td class="n">2070</td><td class="n">5560</td></tr>
+          </tbody>
+        </table>
+      </section>
+      <p class="schedule-hint"><svg class="ico" viewBox="0 0 16 16" aria-hidden="true"><path d="M2 8h12M5 5L2 8l3 3M11 5l3 3-3 3"/></svg>Scroll the schedule sideways for every dimension</p>
+    </div>
+  </section>
+
+  <section class="kit-section" aria-labelledby="k-scale">
+    <header><h2 id="k-scale">Measured PE scale</h2><p><code>.range-scale</code>: one linear scale, 0 to 150 PE, shared by every product sheet. The cyan marker follows the selector.</p></header>
+    <figure class="range-scale">
+      <svg class="rs" width="100%" height="160" role="img" aria-labelledby="rs-title">
+        <title id="rs-title">Measured PE scale, 0 to 150: PE Bio-Filter 6 to 18 PE, FRP Bio-Filter 8 to 30 PE, LT 40 to 150 PE.</title>
+        <line class="rs-proj" x1="4%" x2="4%" y1="41" y2="128"/>
+        <line class="rs-proj" x1="12%" x2="12%" y1="41" y2="128"/>
+        <line class="rs-proj" x1="5.333%" x2="5.333%" y1="79" y2="128"/>
+        <line class="rs-proj" x1="20%" x2="20%" y1="79" y2="128"/>
+        <line class="rs-proj" x1="26.667%" x2="26.667%" y1="117" y2="128"/>
+        <line class="rs-proj" x1="100%" x2="100%" y1="117" y2="128"/>
+        <g class="rs-marker" data-pe-marker>
+          <line x1="13.333%" x2="13.333%" y1="44" y2="128"/>
+          <text x="13.333%" y="152">20 PE</text>
+        </g>
+        <g class="rs-range" data-series="pe">
+          <line class="rs-ext" x1="4%" x2="4%" y1="27" y2="41"/>
+          <line class="rs-ext" x1="12%" x2="12%" y1="27" y2="41"/>
+          <line class="rs-dim" x1="4%" x2="12%" y1="34" y2="34"/>
+          <text x="4%" y="25"><tspan class="rs-name">PE Bio-Filter</tspan><tspan class="rs-val" dx="8">6–18</tspan></text>
+        </g>
+        <g class="rs-range" data-series="frp">
+          <line class="rs-ext" x1="5.333%" x2="5.333%" y1="65" y2="79"/>
+          <line class="rs-ext" x1="20%" x2="20%" y1="65" y2="79"/>
+          <line class="rs-dim" x1="5.333%" x2="20%" y1="72" y2="72"/>
+          <text x="5.333%" y="63"><tspan class="rs-name">FRP Bio-Filter</tspan><tspan class="rs-val" dx="8">8–30</tspan></text>
+        </g>
+        <g class="rs-range" data-series="lt">
+          <line class="rs-ext" x1="26.667%" x2="26.667%" y1="103" y2="117"/>
+          <line class="rs-ext" x1="100%" x2="100%" y1="103" y2="117"/>
+          <line class="rs-dim" x1="26.667%" x2="100%" y1="110" y2="110"/>
+          <text x="26.667%" y="101"><tspan class="rs-name">LT</tspan><tspan class="rs-val" dx="8">40–150</tspan></text>
+        </g>
+        <line class="rs-axis" x1="0" x2="100%" y1="128" y2="128"/>
+        <line class="rs-tick rs-tick-major" x1="0%" x2="0%" y1="128" y2="137"/>
+        <line class="rs-tick" x1="3.333%" x2="3.333%" y1="128" y2="132"/>
+        <line class="rs-tick" x1="6.667%" x2="6.667%" y1="128" y2="132"/>
+        <line class="rs-tick" x1="10%" x2="10%" y1="128" y2="132"/>
+        <line class="rs-tick" x1="13.333%" x2="13.333%" y1="128" y2="132"/>
+        <line class="rs-tick rs-tick-mid" x1="16.667%" x2="16.667%" y1="128" y2="135"/>
+        <line class="rs-tick" x1="20%" x2="20%" y1="128" y2="132"/>
+        <line class="rs-tick" x1="23.333%" x2="23.333%" y1="128" y2="132"/>
+        <line class="rs-tick" x1="26.667%" x2="26.667%" y1="128" y2="132"/>
+        <line class="rs-tick" x1="30%" x2="30%" y1="128" y2="132"/>
+        <line class="rs-tick rs-tick-major" x1="33.333%" x2="33.333%" y1="128" y2="137"/>
+        <line class="rs-tick" x1="36.667%" x2="36.667%" y1="128" y2="132"/>
+        <line class="rs-tick" x1="40%" x2="40%" y1="128" y2="132"/>
+        <line class="rs-tick" x1="43.333%" x2="43.333%" y1="128" y2="132"/>
+        <line class="rs-tick" x1="46.667%" x2="46.667%" y1="128" y2="132"/>
+        <line class="rs-tick rs-tick-mid" x1="50%" x2="50%" y1="128" y2="135"/>
+        <line class="rs-tick" x1="53.333%" x2="53.333%" y1="128" y2="132"/>
+        <line class="rs-tick" x1="56.667%" x2="56.667%" y1="128" y2="132"/>
+        <line class="rs-tick" x1="60%" x2="60%" y1="128" y2="132"/>
+        <line class="rs-tick" x1="63.333%" x2="63.333%" y1="128" y2="132"/>
+        <line class="rs-tick rs-tick-major" x1="66.667%" x2="66.667%" y1="128" y2="137"/>
+        <line class="rs-tick" x1="70%" x2="70%" y1="128" y2="132"/>
+        <line class="rs-tick" x1="73.333%" x2="73.333%" y1="128" y2="132"/>
+        <line class="rs-tick" x1="76.667%" x2="76.667%" y1="128" y2="132"/>
+        <line class="rs-tick" x1="80%" x2="80%" y1="128" y2="132"/>
+        <line class="rs-tick rs-tick-mid" x1="83.333%" x2="83.333%" y1="128" y2="135"/>
+        <line class="rs-tick" x1="86.667%" x2="86.667%" y1="128" y2="132"/>
+        <line class="rs-tick" x1="90%" x2="90%" y1="128" y2="132"/>
+        <line class="rs-tick" x1="93.333%" x2="93.333%" y1="128" y2="132"/>
+        <line class="rs-tick" x1="96.667%" x2="96.667%" y1="128" y2="132"/>
+        <line class="rs-tick rs-tick-major" x1="100%" x2="100%" y1="128" y2="137"/>
+        <text class="rs-tick-label" x="0%" y="152">0</text>
+        <text class="rs-tick-label rs-minor-label" x="16.667%" y="152">25</text>
+        <text class="rs-tick-label" x="33.333%" y="152">50</text>
+        <text class="rs-tick-label rs-minor-label" x="50%" y="152">75</text>
+        <text class="rs-tick-label" x="66.667%" y="152">100</text>
+        <text class="rs-tick-label rs-minor-label" x="83.333%" y="152">125</text>
+        <text class="rs-tick-label" x="100%" y="152">150</text>
+      </svg>
+    </figure>
+  </section>
+
+  <section class="kit-section" aria-labelledby="k-legend">
+    <header><h2 id="k-legend">Layer legend</h2><p><code>.legend</code>: isolate buttons with balloon numbers and <code>aria-pressed</code>. Here water and flow is isolated.</p></header>
+    <figure class="dwg-figure is-split kit-legend">
+      <svg class="dwg" viewBox="0 0 640 384" role="img" aria-labelledby="dwg-b-t" data-isolating>
+      <title id="dwg-b-t">Typical section through an FRP Bio-Filter septic tank (LF-20V) in fine-sand bedding on a concrete base: inlet, settling side, bio-media on the upflow side, outlet at top water level. D 2050, H1 2170, H2 1820 millimetres; invert levels to be confirmed.</title>
+      <g data-layer="ground">
+        <path class="ly-soil" fill-rule="evenodd" d="M0 60H640V384H0Z M185 60L195 334H445L455 60Z"/>
+        <path class="ly-sand" fill-rule="evenodd" d="M185 60L195 334H445L455 60Z M234 90H290V60H350V90H406A14 14 0 0 1 420 104V306A14 14 0 0 1 406 320H234A14 14 0 0 1 220 306V104A14 14 0 0 1 234 90Z M205 320H435V334H205Z"/>
+        <rect class="ly-concrete" x="205" y="320" width="230" height="14"/>
+        <path class="ly-ground" d="M0 60H282M358 60H640"/>
+        <g class="ly-balloon"><circle cx="482" cy="292" r="11"/><text x="482" y="292">4</text></g>
+        <path class="ly-leader" d="M471 292H440"/>
+        <text class="ly-note" x="500" y="296">FINE-SAND BEDDING</text>
+      </g>
+      <g data-layer="shell">
+        <path class="ly-wall-hatch" fill-rule="evenodd" d="M234 90H290V60H350V90H406A14 14 0 0 1 420 104V306A14 14 0 0 1 406 320H234A14 14 0 0 1 220 306V104A14 14 0 0 1 234 90Z M236 97H296V60H344V97H404A9 9 0 0 1 413 106V304A9 9 0 0 1 404 313H236A9 9 0 0 1 227 304V106A9 9 0 0 1 236 97Z"/>
+        <path class="ly-wall" d="M234 90H290V60H350V90H406A14 14 0 0 1 420 104V306A14 14 0 0 1 406 320H234A14 14 0 0 1 220 306V104A14 14 0 0 1 234 90Z"/>
+        <path class="ly-wall" d="M296 60V97H236A9 9 0 0 0 227 106V304A9 9 0 0 0 236 313H404A9 9 0 0 0 413 304V106A9 9 0 0 0 404 97H344V60"/>
+        <rect class="ly-wall-hatch" x="316" y="97" width="6" height="183"/>
+        <rect class="ly-wall" x="316" y="97" width="6" height="183"/>
+        <rect class="ly-wall-hatch" x="282" y="52" width="76" height="8"/>
+        <rect class="ly-wall" x="282" y="52" width="76" height="8"/>
+        <path class="ly-wall" d="M40 100H254V165M40 115H240V165M413 105H600M413 120H600"/>
+        <g class="ly-balloon"><circle cx="482" cy="214" r="11"/><text x="482" y="214">1</text></g>
+        <path class="ly-leader" d="M471 214H421"/>
+        <text class="ly-note" x="500" y="218">FRP TANK SHELL</text>
+      </g>
+      <g data-layer="media">
+        <rect class="ly-media" x="322" y="172" width="91" height="96"/>
+        <path class="ly-steel" d="M322 172H413M322 268H413"/>
+        <g class="ly-balloon"><circle cx="482" cy="248" r="11"/><text x="482" y="248">3</text></g>
+        <path class="ly-leader" d="M471 248H402"/>
+        <text class="ly-note" x="500" y="252">BIO-MEDIA</text>
+      </g>
+      <g data-layer="water" class="is-isolated">
+        <rect class="ly-water" x="227" y="120" width="186" height="193"/>
+        <path class="ly-waterline" d="M229 120H411"/>
+        <path class="ly-waterline" d="M262 111h12l-6 8z"/>
+        <text class="ly-note" x="279" y="117">TWL</text>
+        <path class="ly-flow" d="M60 107.5H170"/>
+        <path class="ly-flow" d="M247 128V160"/>
+        <path class="ly-flow" d="M272 196C272 284 300 298 348 298"/>
+        <path class="ly-flow" d="M372 290V160"/>
+        <path class="ly-flow" d="M436 112.5H566"/>
+        <g class="ly-balloon"><circle cx="482" cy="180" r="11"/><text x="482" y="180">2</text></g>
+        <path class="ly-leader" d="M471 180L404 128"/>
+        <text class="ly-note" x="500" y="184">TOP WATER LEVEL</text>
+      </g>
+      <g data-layer="dims">
+        <path class="ly-dim-ext" d="M220 324V374M420 324V374M216 90H134M216 320H134M216 120H174"/>
+        <path class="ly-dim" d="M220 368H420"/>
+        <path class="ly-dim" d="M142 90V320"/>
+        <path class="ly-dim" d="M182 120V320"/>
+        <text class="ly-dim-text" x="320" y="361" text-anchor="middle">D 2050</text>
+        <text class="ly-dim-text" transform="translate(134 205) rotate(-90)" text-anchor="middle">H1 2170</text>
+        <text class="ly-dim-text" transform="translate(174 220) rotate(-90)" text-anchor="middle">H2 1820</text>
+      </g>
+      <g data-layer="refs">
+        <path class="ly-center" d="M320 28V352"/>
+        <path class="ly-invert" d="M74 125H86L80 115Z"/>
+        <text class="ly-note" x="80" y="142" text-anchor="middle">INLET IL</text>
+        <text class="ly-note" x="80" y="156" text-anchor="middle">TBC</text>
+        <path class="ly-invert" d="M554 130H566L560 120Z"/>
+        <text class="ly-note" x="560" y="147" text-anchor="middle">OUTLET IL</text>
+        <text class="ly-note" x="560" y="161" text-anchor="middle">TBC</text>
+      </g>
+    </svg>
+      <div class="legend" role="group" aria-label="Isolate a layer in the section">
+        <button class="legend-item" type="button" aria-pressed="false" data-isolate="shell"><span class="balloon">1</span>Tank shell<svg class="dwg legend-swatch" viewBox="0 0 32 10" aria-hidden="true"><path class="ly-wall" d="M1 5H31"/></svg></button>
+        <button class="legend-item" type="button" aria-pressed="true" data-isolate="water"><span class="balloon">2</span>Water and flow<svg class="dwg legend-swatch" viewBox="0 0 32 10" aria-hidden="true"><path class="ly-flow" d="M1 5H27"/></svg></button>
+        <button class="legend-item" type="button" aria-pressed="false" data-isolate="media"><span class="balloon">3</span>Bio-media<svg class="dwg legend-swatch" viewBox="0 0 32 10" aria-hidden="true"><rect class="ly-media" x="1" y="1" width="30" height="8"/></svg></button>
+        <button class="legend-item" type="button" aria-pressed="false" data-isolate="ground"><span class="balloon">4</span>Bedding and base<svg class="dwg legend-swatch" viewBox="0 0 32 10" aria-hidden="true"><rect class="ly-sand" x="1" y="1" width="30" height="8"/></svg></button>
+        <button class="legend-item" type="button" aria-pressed="false" data-isolate="dims"><span class="balloon">5</span>Dimensions<svg class="dwg legend-swatch" viewBox="0 0 32 10" aria-hidden="true"><path class="ly-dim" d="M4 5H28"/></svg></button>
+        <button class="legend-item" type="button" aria-pressed="false" data-isolate="refs"><span class="balloon">6</span>Centreline and inverts<svg class="dwg legend-swatch" viewBox="0 0 32 10" aria-hidden="true"><path class="ly-center" d="M1 5H31"/></svg></button>
+      </div>
+      <figcaption class="view-title">
+        <span class="view-bubble" aria-hidden="true"><span>B</span><span>06</span></span>
+        <span class="view-name">Layer isolate: water and flow</span>
+        <span class="view-sub">Raw, settled, filtered, discharged</span>
+      </figcaption>
+    </figure>
+  </section>
+
+  <section class="kit-section" aria-labelledby="k-approvals">
+    <header><h2 id="k-approvals">Approvals and key facts</h2><p><code>.approvals</code> reads like a revision table; <code>.keyfacts</code> are drawing-note rows.</p></header>
+    <div class="kit-stack">
+      <section class="schedule-scroll" data-scroll-x data-no-swipe tabindex="0" aria-label="Approvals schedule, scrolls sideways">
+        <table class="approvals">
+          <caption>Approvals schedule</caption>
+          <thead>
+            <tr><th scope="col">No.</th><th scope="col">Standard</th><th scope="col">Sample licence</th><th scope="col">Series</th><th scope="col">Since</th><th scope="col">SPAN ref.</th></tr>
+          </thead>
+          <tbody>
+            <tr><td><span class="rev">1</span></td><td>MS 2441-1:2012</td><td class="lic">SAMPLE-PE-01</td><td>PE Bio-Filter septic tank</td><td class="na">Sample</td><td class="ref na">Sample</td></tr>
+            <tr><td><span class="rev">2</span></td><td>MS 2441-1:2012</td><td class="lic">SAMPLE-FRP-02</td><td>FRP Bio-Filter septic tank</td><td class="na">Sample</td><td class="ref na">Sample</td></tr>
+            <tr><td><span class="rev">3</span></td><td>MS 2441-2:2014</td><td class="lic">SAMPLE-SSTS-03</td><td>LT small sewage treatment system</td><td class="na">Sample</td><td class="ref na">Sample</td></tr>
+          </tbody>
+        </table>
+      </section>
+      <p class="schedule-hint"><svg class="ico" viewBox="0 0 16 16" aria-hidden="true"><path d="M2 8h12M5 5L2 8l3 3M11 5l3 3-3 3"/></svg>Scroll sideways for series and SPAN references</p>
+      <div class="kit-cols">
+        <dl class="keyfacts">
+          <div><dt>Warranty</dt><dd>5 years, PE and FRP series. 8 years, LT.</dd></div>
+          <div><dt>Service life</dt><dd>10+ years with proper installation</dd></div>
+          <div><dt>Desludging</dt><dd>IWK servicing every 2 years</dd></div>
+          <div><dt>Supply</dt><dd>Tank and manhole cover. Installation by the contractor.</dd></div>
+        </dl>
+        <dl class="keyfacts">
+          <div><dt>Dispatch point</dt><dd>Nilai, Negeri Sembilan</dd></div>
+          <div><dt>Materials</dt><dd>Rotomoulded PE and FRP lay-up, under one roof</dd></div>
+          <div><dt>Company</dt><dd>Fictional manufacturer<span class="sample-tag">Sample</span></dd></div>
+          <div><dt>LT effluent</dt><dd>EQA Standard A. Two air blowers, 1 duty and 1 standby.</dd></div>
+        </dl>
+      </div>
+    </div>
+  </section>
+
+  <section class="kit-section" aria-labelledby="k-steps">
+    <header><h2 id="k-steps">Installation sequence</h2><p><code>.steps</code>, set with the sample installation panels B to F (see sheet 11).</p></header>
+    <ol class="steps">
+      <li><span class="balloon">1</span><span class="step-title">Base</span><p class="step-text">50 mm lean concrete, then a 150 mm grade 30N concrete base with one layer of BRC-A8.</p><span class="step-ref">Panel B, item 2</span></li>
+      <li><span class="balloon">2</span><span class="step-title">Anchors</span><p class="step-text">Stainless steel anchor hooks in the base.</p><span class="step-ref">Panel B, item 3</span></li>
+      <li><span class="balloon">3</span><span class="step-title">Set the tank</span><p class="step-text">Lower the tank onto the base and secure it with stainless steel turnbuckles.</p><span class="step-ref">Panel C, items 4 and 5</span></li>
+      <li><span class="balloon">4</span><span class="step-title">Fill and backfill</span><p class="step-text">Fill the tank with water, then backfill around it with sand.</p><span class="step-ref">Panel D, items 6 and 7</span></li>
+      <li><span class="balloon">5</span><span class="step-title">Pipes</span><p class="step-text">Inlet from the last manhole and outlet to the outlet manhole, both at 1:100.</p><span class="step-ref">Panel E, item 8</span></li>
+      <li><span class="balloon">6</span><span class="step-title">Slab and access</span><p class="step-text">100 mm 1:2:4 concrete slab with one layer of BRC-A9. Extend the brick sump for the manhole cover.</p><span class="step-ref">Panel E, items 9 and 10</span></li>
+      <li><span class="balloon">7</span><span class="step-title">Finish</span><p class="step-text">Sand backfilling to ground level and the cover for the manhole.</p><span class="step-ref">Panel F, item 11</span></li>
+    </ol>
+  </section>
+
+  <section class="kit-section" aria-labelledby="k-selector">
+    <header><h2 id="k-selector">Selector and result</h2><p><code>.selector</code>: big-digit PE on a cyan dimension line, site conditions as layer toggles. <code>.result</code> shows the engine's output for 20 PE.</p></header>
+    <div class="kit-cols">
+      <form class="selector" data-selector novalidate>
+        <div class="pe-field">
+          <label class="pe-label" for="kit-pe">Population equivalent</label>
+          <div class="pe-input">
+            <input id="kit-pe" name="pe" type="number" inputmode="numeric" min="1" max="1000" step="1" value="20" required aria-describedby="kit-pe-help">
+            <span class="pe-unit" aria-hidden="true">PE</span>
+          </div>
+          <p class="pe-help" id="kit-pe-help">Whole number. Phase 1 covers 6 to 150 PE.</p>
+        </div>
+        <fieldset class="toggles">
+          <legend>Site conditions</legend>
+          <label class="toggle"><input type="checkbox" name="highWaterTable"><span class="toggle-box" aria-hidden="true"></span><span>High water table</span><span class="toggle-state" aria-hidden="true"></span></label>
+          <label class="toggle"><input type="checkbox" name="deepBurial"><span class="toggle-box" aria-hidden="true"></span><span>Deep burial</span><span class="toggle-state" aria-hidden="true"></span></label>
+          <label class="toggle"><input type="checkbox" name="limitedFootprint" checked><span class="toggle-box" aria-hidden="true"></span><span>Limited footprint</span><span class="toggle-state" aria-hidden="true"></span></label>
+          <label class="toggle"><input type="checkbox" name="powerAvailable" checked><span class="toggle-box" aria-hidden="true"></span><span>Mains power available</span><span class="toggle-state" aria-hidden="true"></span></label>
+        </fieldset>
+        <p class="kit-row"><button class="btn btn-primary" type="submit">Find the model</button></p>
+      </form>
+      <div class="kit-stack">
+        <section class="result" data-selector-result data-status="ok" aria-labelledby="kit-result-model">
+          <h3 class="result-model" id="kit-result-model">LF-20V</h3>
+          <p class="result-series">FRP Bio-Filter septic tank, rated 20 PE, vertical</p>
+          <dl class="result-dims">
+            <div><dt><span class="sym">D</span>Diameter</dt><dd>2050<small>mm</small></dd></div>
+            <div><dt><span class="sym">H1</span>Height</dt><dd>2170<small>mm</small></dd></div>
+            <div><dt><span class="sym">H2</span>Water</dt><dd>1820<small>mm</small></dd></div>
+            <div><dt>Capacity</dt><dd>6010<small>L</small></dd></div>
+          </dl>
+          <section class="notes is-plain" aria-labelledby="kit-why">
+            <h4 class="notes-title" id="kit-why">Why this model</h4>
+            <ol>
+              <li>Requested 20 PE exceeds the 18 PE limit of the PE Bio-Filter series, so the FRP Bio-Filter series applies.</li>
+              <li>Rated 20 PE, the smallest FRP Bio-Filter septic tank model that covers 20 PE.</li>
+            </ol>
+          </section>
+          <p class="result-actions"><a class="btn btn-primary btn-cell" data-whatsapp-enquiry href="https://wa.me/?text=Hi%2C%20I%20would%20like%20to%20enquire%20about%20the%20LF-20V%20(FRP%20Bio-Filter%20septic%20tank%2C%20rated%2020%20PE).%20Please%20send%20the%20specification%20sheet%20and%20CAD%20drawing." target="_blank" rel="noopener"><small>Enquire on WhatsApp</small><strong>LF-20V, 20 PE</strong></a></p>
+          <p class="result-disclaimer">Selection guide only. Lintang Tankworks' engineers confirm the model with a PE calculation.</p>
+        </section>
+        <div class="result is-empty"><p>Enter a PE to see the certified model.</p></div>
+        <div class="result" data-status="out-of-range"><p class="warn">Beyond Phase 1 (up to 150 PE): a full sewage treatment plant is needed. Talk to Lintang Tankworks' engineers.</p></div>
+        <p class="warn">LT needs mains power for its air blowers; confirm power is available on site.</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="kit-section" aria-labelledby="k-buttons">
+    <header><h2 id="k-buttons">Buttons</h2><p><code>.btn</code>, <code>.btn-primary</code> and <code>.btn-cell</code>, 44 px targets, with disabled, busy and done states.</p></header>
+    <div class="kit-row">
+      <a class="btn btn-primary" href="https://wa.me/?text=Hi%2C%20I%20would%20like%20to%20enquire%20about%20your%20wastewater%20%26%20sanitation%20range%20(PE%20Bio-Filter%2C%20FRP%20Bio-Filter%20and%20LT%20septic%20%2F%20sewage%20treatment%20systems).%20Please%20send%20more%20information." target="_blank" rel="noopener"><svg class="ico" viewBox="0 0 16 16" aria-hidden="true"><path d="M2.5 3h11v7.5H7L4 13v-2.5H2.5z"/></svg>Send on WhatsApp</a>
+      <button class="btn" type="button"><svg class="ico" viewBox="0 0 16 16" aria-hidden="true"><path d="M5.5 5.5h8v8h-8z"/><path d="M10.5 5.5v-3h-8v8h3"/></svg>Copy link</button>
+      <button class="btn" type="button" data-state="done">Link copied</button>
+      <button class="btn" type="button" aria-busy="true">Preparing</button>
+      <button class="btn btn-primary" type="button" disabled>Find the model</button>
+      <a class="btn btn-cell" href="#k-selector"><small>Next sheet</small><strong>07 LT System</strong></a>
+    </div>
+  </section>
+
+  <section class="kit-section" aria-labelledby="k-xref">
+    <header><h2 id="k-xref">Image viewport</h2><p><code>.viewport-frame</code>: an image attached like an XREF, with clip boundary, corner ticks and a provenance strip.</p></header>
+    <div class="kit-cols">
+      <figure class="viewport-frame">
+        <div class="vf-clip"><img src="../../src/assets/photo-tanks.webp" width="1600" height="900" alt="A cream fibreglass septic tank hanging from steel crane slings in front of trees, with access necks on top and lifting lugs bolted to its middle flange."></div>
+        <figcaption class="vf-strip"><span class="vf-name">photo-tanks.webp</span><span class="vf-prov">Sample site photo, stand-in for Lintang Tankworks dispatch photos. Photo: Project Kei, CC&nbsp;BY-SA&nbsp;4.0, Wikimedia Commons (cropped).</span></figcaption>
+      </figure>
+      <figure class="viewport-frame is-empty">
+        <div class="vf-clip"><span class="vf-empty">Photo to be supplied</span></div>
+        <figcaption class="vf-strip"><span class="vf-name">factory-truck-loading.jpg</span><span class="vf-prov">Factory truck-loading photo, to be supplied by Lintang Tankworks.</span></figcaption>
+      </figure>
+    </div>
+  </section>
+
+  <section class="kit-section" aria-labelledby="k-dialogs">
+    <header><h2 id="k-dialogs">Sheet index and share</h2><p><code>dialog[data-menu]</code> and <code>dialog[data-share]</code>, shown open. The engine fills <code>[data-menu-list]</code> from each slide's <code>data-title</code>; titles here are illustrative.</p></header>
+    <div class="kit-dialogs">
+      <dialog data-menu id="deck-menu" aria-labelledby="deck-menu-title" open>
+        <div class="dlg-head">
+          <h2 id="deck-menu-title">Sheet index</h2>
+          <button class="dlg-close" type="button" data-action="close" aria-label="Close sheet index"><svg class="ico" viewBox="0 0 16 16" aria-hidden="true"><path d="M4 4l8 8M12 4l-8 8"/></svg></button>
+        </div>
+        <ul data-menu-list>
+          <li><button type="button" data-menu-goto="0">Wastewater &amp; Sanitation Systems</button></li>
+          <li><button type="button" data-menu-goto="1">Lintang Tankworks at a glance</button></li>
+          <li><button type="button" data-menu-goto="2">Standards and approvals</button></li>
+          <li><button type="button" data-menu-goto="3">Product range by PE</button></li>
+          <li><button type="button" data-menu-goto="4">PE Bio-Filter septic tank</button></li>
+          <li><button type="button" data-menu-goto="5" aria-current="true">FRP Bio-Filter septic tank</button></li>
+          <li><button type="button" data-menu-goto="6">LT small sewage treatment system</button></li>
+          <li><button type="button" data-menu-goto="7">How the bio-filter works</button></li>
+          <li><button type="button" data-menu-goto="8">Installation sequence</button></li>
+          <li><button type="button" data-menu-goto="9">Find your model</button></li>
+          <li><button type="button" data-menu-goto="10">Selection matrix</button></li>
+          <li><button type="button" data-menu-goto="11">Contact and enquiry</button></li>
+        </ul>
+        <div class="dlg-foot"><p class="warn">Portfolio concept. Fictional manufacturer, sample data.</p><p class="dlg-keys">Press <kbd>G</kbd> or <kbd>Esc</kbd> to close</p></div>
+      </dialog>
+      <dialog data-share id="deck-share" aria-labelledby="deck-share-title" open>
+        <div class="dlg-head">
+          <h2 id="deck-share-title">Share this deck</h2>
+          <button class="dlg-close" type="button" data-action="close" aria-label="Close share"><svg class="ico" viewBox="0 0 16 16" aria-hidden="true"><path d="M4 4l8 8M12 4l-8 8"/></svg></button>
+        </div>
+        <div class="share-body">
+          <div data-qr aria-hidden="true"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 29 29" role="img" aria-label="QR code" shape-rendering="crispEdges"><path d="M0 0h1v1h-1zM1 0h1v1h-1zM2 0h1v1h-1zM3 0h1v1h-1zM4 0h1v1h-1zM5 0h1v1h-1zM6 0h1v1h-1zM8 0h1v1h-1zM10 0h1v1h-1zM13 0h1v1h-1zM14 0h1v1h-1zM15 0h1v1h-1zM18 0h1v1h-1zM22 0h1v1h-1zM23 0h1v1h-1zM24 0h1v1h-1zM25 0h1v1h-1zM26 0h1v1h-1zM27 0h1v1h-1zM28 0h1v1h-1zM0 1h1v1h-1zM6 1h1v1h-1zM8 1h1v1h-1zM9 1h1v1h-1zM10 1h1v1h-1zM13 1h1v1h-1zM14 1h1v1h-1zM15 1h1v1h-1zM19 1h1v1h-1zM22 1h1v1h-1zM28 1h1v1h-1zM0 2h1v1h-1zM2 2h1v1h-1zM3 2h1v1h-1zM4 2h1v1h-1zM6 2h1v1h-1zM8 2h1v1h-1zM9 2h1v1h-1zM10 2h1v1h-1zM11 2h1v1h-1zM12 2h1v1h-1zM13 2h1v1h-1zM14 2h1v1h-1zM20 2h1v1h-1zM22 2h1v1h-1zM24 2h1v1h-1zM25 2h1v1h-1zM26 2h1v1h-1zM28 2h1v1h-1zM0 3h1v1h-1zM2 3h1v1h-1zM3 3h1v1h-1zM4 3h1v1h-1zM6 3h1v1h-1zM14 3h1v1h-1zM15 3h1v1h-1zM17 3h1v1h-1zM18 3h1v1h-1zM19 3h1v1h-1zM20 3h1v1h-1zM22 3h1v1h-1zM24 3h1v1h-1zM25 3h1v1h-1zM26 3h1v1h-1zM28 3h1v1h-1zM0 4h1v1h-1zM2 4h1v1h-1zM3 4h1v1h-1zM4 4h1v1h-1zM6 4h1v1h-1zM8 4h1v1h-1zM9 4h1v1h-1zM10 4h1v1h-1zM13 4h1v1h-1zM15 4h1v1h-1zM18 4h1v1h-1zM19 4h1v1h-1zM22 4h1v1h-1zM24 4h1v1h-1zM25 4h1v1h-1zM26 4h1v1h-1zM28 4h1v1h-1zM0 5h1v1h-1zM6 5h1v1h-1zM9 5h1v1h-1zM10 5h1v1h-1zM13 5h1v1h-1zM14 5h1v1h-1zM20 5h1v1h-1zM22 5h1v1h-1zM28 5h1v1h-1zM0 6h1v1h-1zM1 6h1v1h-1zM2 6h1v1h-1zM3 6h1v1h-1zM4 6h1v1h-1zM5 6h1v1h-1zM6 6h1v1h-1zM8 6h1v1h-1zM10 6h1v1h-1zM12 6h1v1h-1zM14 6h1v1h-1zM16 6h1v1h-1zM18 6h1v1h-1zM20 6h1v1h-1zM22 6h1v1h-1zM23 6h1v1h-1zM24 6h1v1h-1zM25 6h1v1h-1zM26 6h1v1h-1zM27 6h1v1h-1zM28 6h1v1h-1zM14 7h1v1h-1zM18 7h1v1h-1zM20 7h1v1h-1zM0 8h1v1h-1zM3 8h1v1h-1zM4 8h1v1h-1zM5 8h1v1h-1zM6 8h1v1h-1zM7 8h1v1h-1zM8 8h1v1h-1zM10 8h1v1h-1zM13 8h1v1h-1zM14 8h1v1h-1zM15 8h1v1h-1zM16 8h1v1h-1zM17 8h1v1h-1zM19 8h1v1h-1zM21 8h1v1h-1zM24 8h1v1h-1zM26 8h1v1h-1zM27 8h1v1h-1zM28 8h1v1h-1zM0 9h1v1h-1zM3 9h1v1h-1zM10 9h1v1h-1zM14 9h1v1h-1zM17 9h1v1h-1zM18 9h1v1h-1zM19 9h1v1h-1zM23 9h1v1h-1zM24 9h1v1h-1zM26 9h1v1h-1zM27 9h1v1h-1zM0 10h1v1h-1zM3 10h1v1h-1zM4 10h1v1h-1zM5 10h1v1h-1zM6 10h1v1h-1zM7 10h1v1h-1zM9 10h1v1h-1zM10 10h1v1h-1zM11 10h1v1h-1zM14 10h1v1h-1zM17 10h1v1h-1zM20 10h1v1h-1zM22 10h1v1h-1zM23 10h1v1h-1zM26 10h1v1h-1zM3 11h1v1h-1zM4 11h1v1h-1zM7 11h1v1h-1zM14 11h1v1h-1zM15 11h1v1h-1zM17 11h1v1h-1zM19 11h1v1h-1zM20 11h1v1h-1zM21 11h1v1h-1zM22 11h1v1h-1zM25 11h1v1h-1zM28 11h1v1h-1zM0 12h1v1h-1zM1 12h1v1h-1zM2 12h1v1h-1zM3 12h1v1h-1zM6 12h1v1h-1zM8 12h1v1h-1zM9 12h1v1h-1zM10 12h1v1h-1zM13 12h1v1h-1zM14 12h1v1h-1zM20 12h1v1h-1zM22 12h1v1h-1zM23 12h1v1h-1zM28 12h1v1h-1zM1 13h1v1h-1zM3 13h1v1h-1zM5 13h1v1h-1zM7 13h1v1h-1zM8 13h1v1h-1zM9 13h1v1h-1zM12 13h1v1h-1zM17 13h1v1h-1zM20 13h1v1h-1zM21 13h1v1h-1zM22 13h1v1h-1zM24 13h1v1h-1zM25 13h1v1h-1zM26 13h1v1h-1zM27 13h1v1h-1zM28 13h1v1h-1zM0 14h1v1h-1zM1 14h1v1h-1zM6 14h1v1h-1zM7 14h1v1h-1zM9 14h1v1h-1zM12 14h1v1h-1zM14 14h1v1h-1zM15 14h1v1h-1zM18 14h1v1h-1zM19 14h1v1h-1zM22 14h1v1h-1zM23 14h1v1h-1zM26 14h1v1h-1zM28 14h1v1h-1zM2 15h1v1h-1zM3 15h1v1h-1zM4 15h1v1h-1zM7 15h1v1h-1zM8 15h1v1h-1zM11 15h1v1h-1zM12 15h1v1h-1zM13 15h1v1h-1zM14 15h1v1h-1zM16 15h1v1h-1zM21 15h1v1h-1zM22 15h1v1h-1zM23 15h1v1h-1zM24 15h1v1h-1zM26 15h1v1h-1zM28 15h1v1h-1zM3 16h1v1h-1zM4 16h1v1h-1zM5 16h1v1h-1zM6 16h1v1h-1zM8 16h1v1h-1zM9 16h1v1h-1zM12 16h1v1h-1zM15 16h1v1h-1zM18 16h1v1h-1zM25 16h1v1h-1zM0 17h1v1h-1zM3 17h1v1h-1zM5 17h1v1h-1zM10 17h1v1h-1zM12 17h1v1h-1zM18 17h1v1h-1zM19 17h1v1h-1zM20 17h1v1h-1zM24 17h1v1h-1zM26 17h1v1h-1zM27 17h1v1h-1zM0 18h1v1h-1zM1 18h1v1h-1zM4 18h1v1h-1zM5 18h1v1h-1zM6 18h1v1h-1zM8 18h1v1h-1zM9 18h1v1h-1zM10 18h1v1h-1zM13 18h1v1h-1zM14 18h1v1h-1zM16 18h1v1h-1zM19 18h1v1h-1zM20 18h1v1h-1zM21 18h1v1h-1zM25 18h1v1h-1zM28 18h1v1h-1zM0 19h1v1h-1zM1 19h1v1h-1zM2 19h1v1h-1zM8 19h1v1h-1zM9 19h1v1h-1zM11 19h1v1h-1zM13 19h1v1h-1zM15 19h1v1h-1zM16 19h1v1h-1zM19 19h1v1h-1zM21 19h1v1h-1zM23 19h1v1h-1zM24 19h1v1h-1zM25 19h1v1h-1zM26 19h1v1h-1zM0 20h1v1h-1zM1 20h1v1h-1zM2 20h1v1h-1zM6 20h1v1h-1zM7 20h1v1h-1zM8 20h1v1h-1zM13 20h1v1h-1zM18 20h1v1h-1zM19 20h1v1h-1zM20 20h1v1h-1zM21 20h1v1h-1zM22 20h1v1h-1zM23 20h1v1h-1zM24 20h1v1h-1zM25 20h1v1h-1zM26 20h1v1h-1zM27 20h1v1h-1zM8 21h1v1h-1zM9 21h1v1h-1zM13 21h1v1h-1zM16 21h1v1h-1zM17 21h1v1h-1zM18 21h1v1h-1zM19 21h1v1h-1zM20 21h1v1h-1zM24 21h1v1h-1zM25 21h1v1h-1zM0 22h1v1h-1zM1 22h1v1h-1zM2 22h1v1h-1zM3 22h1v1h-1zM4 22h1v1h-1zM5 22h1v1h-1zM6 22h1v1h-1zM8 22h1v1h-1zM9 22h1v1h-1zM10 22h1v1h-1zM11 22h1v1h-1zM13 22h1v1h-1zM15 22h1v1h-1zM16 22h1v1h-1zM19 22h1v1h-1zM20 22h1v1h-1zM22 22h1v1h-1zM24 22h1v1h-1zM25 22h1v1h-1zM0 23h1v1h-1zM6 23h1v1h-1zM8 23h1v1h-1zM10 23h1v1h-1zM11 23h1v1h-1zM12 23h1v1h-1zM13 23h1v1h-1zM16 23h1v1h-1zM18 23h1v1h-1zM19 23h1v1h-1zM20 23h1v1h-1zM24 23h1v1h-1zM27 23h1v1h-1zM0 24h1v1h-1zM2 24h1v1h-1zM3 24h1v1h-1zM4 24h1v1h-1zM6 24h1v1h-1zM8 24h1v1h-1zM9 24h1v1h-1zM10 24h1v1h-1zM13 24h1v1h-1zM15 24h1v1h-1zM16 24h1v1h-1zM17 24h1v1h-1zM19 24h1v1h-1zM20 24h1v1h-1zM21 24h1v1h-1zM22 24h1v1h-1zM23 24h1v1h-1zM24 24h1v1h-1zM25 24h1v1h-1zM27 24h1v1h-1zM0 25h1v1h-1zM2 25h1v1h-1zM3 25h1v1h-1zM4 25h1v1h-1zM6 25h1v1h-1zM8 25h1v1h-1zM14 25h1v1h-1zM16 25h1v1h-1zM18 25h1v1h-1zM20 25h1v1h-1zM21 25h1v1h-1zM23 25h1v1h-1zM27 25h1v1h-1zM0 26h1v1h-1zM2 26h1v1h-1zM3 26h1v1h-1zM4 26h1v1h-1zM6 26h1v1h-1zM11 26h1v1h-1zM12 26h1v1h-1zM13 26h1v1h-1zM16 26h1v1h-1zM18 26h1v1h-1zM19 26h1v1h-1zM21 26h1v1h-1zM23 26h1v1h-1zM24 26h1v1h-1zM26 26h1v1h-1zM27 26h1v1h-1zM28 26h1v1h-1zM0 27h1v1h-1zM6 27h1v1h-1zM9 27h1v1h-1zM10 27h1v1h-1zM11 27h1v1h-1zM12 27h1v1h-1zM13 27h1v1h-1zM15 27h1v1h-1zM21 27h1v1h-1zM22 27h1v1h-1zM23 27h1v1h-1zM25 27h1v1h-1zM26 27h1v1h-1zM28 27h1v1h-1zM0 28h1v1h-1zM1 28h1v1h-1zM2 28h1v1h-1zM3 28h1v1h-1zM4 28h1v1h-1zM5 28h1v1h-1zM6 28h1v1h-1zM8 28h1v1h-1zM9 28h1v1h-1zM11 28h1v1h-1zM12 28h1v1h-1zM14 28h1v1h-1zM16 28h1v1h-1zM17 28h1v1h-1zM18 28h1v1h-1zM19 28h1v1h-1zM20 28h1v1h-1zM21 28h1v1h-1zM22 28h1v1h-1zM24 28h1v1h-1zM25 28h1v1h-1z" fill="#000000"/></svg></div>
+          <div class="share-actions">
+            <p class="lede"><span class="share-scan">Scan to open the deck on a phone, or send the link.</span><span class="share-unhosted">Open the deck on a phone, or send the link.</span></p>
+            <p class="share-url">https://www.example.com/</p>
+            <button class="btn" type="button" data-copy-link><svg class="ico" viewBox="0 0 16 16" aria-hidden="true"><path d="M5.5 5.5h8v8h-8z"/><path d="M10.5 5.5v-3h-8v8h3"/></svg>Copy link</button>
+            <a class="btn btn-primary" data-share-whatsapp href="https://wa.me/?text=https%3A%2F%2Fwww.example.com%2F" target="_blank" rel="noopener"><svg class="ico" viewBox="0 0 16 16" aria-hidden="true"><path d="M2.5 3h11v7.5H7L4 13v-2.5H2.5z"/></svg>Send on WhatsApp</a>
+          </div>
+        </div>
+      </dialog>
+    </div>
+  </section>
+</div>
+</body>
+</html>

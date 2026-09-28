@@ -1,0 +1,75 @@
+{
+  "meta": {
+    "units": "mm unless stated; capacity in litres",
+    "note": "Synthetic sample data for a portfolio concept. Every dimension is derived from the PE rating by an authored sizing rule and every capacity is the drawn liquid volume (scripts/product-rule.mjs, docs/SOURCES.md); no figure is copied from a real manufacturer. The brand, model codes and licence numbers are fictional.",
+    "desludgingYears": 2
+  },
+  "series": [
+    {
+      "id": "pe",
+      "name": "PE Bio-Filter septic tank",
+      "material": "Rotomolded polyethylene (HDPE)",
+      "peRange": [6, 18],
+      "process": "Upflow anaerobic filtration (bio-media)",
+      "power": false,
+      "warrantyYears": 5,
+      "pipeMm": 100,
+      "standard": "MS 2441-1:2012",
+      "sirimLicence": "SAMPLE-PE-01",
+      "models": [
+        { "code": "LP-6H", "pe": 6, "orientation": "horizontal", "diameter": 1300, "length": 2550, "height": 1300, "waterLevel": 1050, "capacityL": 2930 },
+        { "code": "LP-6V", "pe": 6, "orientation": "vertical", "diameter": 1550, "length": null, "height": 1850, "waterLevel": 1550, "capacityL": 2920 },
+        { "code": "LP-8", "pe": 8, "orientation": "vertical", "diameter": 1600, "length": null, "height": 1980, "waterLevel": 1680, "capacityL": 3380 },
+        { "code": "LP-10", "pe": 10, "orientation": "vertical", "diameter": 1650, "length": null, "height": 2080, "waterLevel": 1780, "capacityL": 3810 },
+        { "code": "LP-12", "pe": 12, "orientation": "vertical", "diameter": 1700, "length": null, "height": 2170, "waterLevel": 1870, "capacityL": 4240 },
+        { "code": "LP-15", "pe": 15, "orientation": "vertical", "diameter": 1800, "length": null, "height": 2230, "waterLevel": 1930, "capacityL": 4910 },
+        { "code": "LP-18", "pe": 18, "orientation": "vertical", "diameter": 1850, "length": null, "height": 2370, "waterLevel": 2070, "capacityL": 5560 }
+      ]
+    },
+    {
+      "id": "frp",
+      "name": "FRP Bio-Filter septic tank",
+      "material": "Fibreglass reinforced polyester (FRP)",
+      "peRange": [8, 30],
+      "process": "Upflow anaerobic filtration (bio-media)",
+      "power": false,
+      "warrantyYears": 5,
+      "pipeMm": 150,
+      "standard": "MS 2441-1:2012",
+      "sirimLicence": "SAMPLE-FRP-02",
+      "models": [
+        { "code": "LF-8H", "pe": 8, "orientation": "horizontal", "diameter": 1500, "length": 2220, "height": 1500, "waterLevel": 1200, "capacityL": 3360 },
+        { "code": "LF-8V", "pe": 8, "orientation": "vertical", "diameter": 1650, "length": null, "height": 1930, "waterLevel": 1580, "capacityL": 3380 },
+        { "code": "LF-15H", "pe": 15, "orientation": "horizontal", "diameter": 1550, "length": 3010, "height": 1550, "waterLevel": 1250, "capacityL": 4910 },
+        { "code": "LF-15V", "pe": 15, "orientation": "vertical", "diameter": 1900, "length": null, "height": 2080, "waterLevel": 1730, "capacityL": 4910 },
+        { "code": "LF-20V", "pe": 20, "orientation": "vertical", "diameter": 2050, "length": null, "height": 2170, "waterLevel": 1820, "capacityL": 6010 },
+        { "code": "LF-28H", "pe": 28, "orientation": "horizontal", "diameter": 1700, "length": 3890, "height": 1700, "waterLevel": 1400, "capacityL": 7780 },
+        { "code": "LF-30H", "pe": 30, "orientation": "horizontal", "diameter": 1700, "length": 4110, "height": 1700, "waterLevel": 1400, "capacityL": 8220 }
+      ]
+    },
+    {
+      "id": "lt",
+      "name": "LT small sewage treatment system",
+      "material": "Fibreglass reinforced plastics (FRP), box-ended tank with two chambers",
+      "peRange": [40, 150],
+      "process": "Upflow activated sludge treatment (aerated)",
+      "power": true,
+      "powerNote": "Two air blowers (1 duty, 1 standby) and air diffuser supplied by the manufacturer",
+      "effluent": "EQA Standard A",
+      "warrantyYears": 8,
+      "pipeMm": 150,
+      "standard": "MS 2441-2:2014",
+      "sirimLicence": "SAMPLE-SSTS-03",
+      "models": [
+        { "code": "LT-40", "pe": 40, "orientation": "horizontal", "width": 2300, "length": 1600, "height": 2500, "waterLevel": 1900, "capacityL": 6990 },
+        { "code": "LT-50", "pe": 50, "orientation": "horizontal", "width": 2300, "length": 1950, "height": 2500, "waterLevel": 1900, "capacityL": 8520 },
+        { "code": "LT-60", "pe": 60, "orientation": "horizontal", "width": 2300, "length": 2300, "height": 2500, "waterLevel": 1900, "capacityL": 10050 },
+        { "code": "LT-75", "pe": 75, "orientation": "horizontal", "width": 2300, "length": 2800, "height": 2500, "waterLevel": 1900, "capacityL": 12240 },
+        { "code": "LT-90", "pe": 90, "orientation": "horizontal", "width": 2300, "length": 3300, "height": 2500, "waterLevel": 1900, "capacityL": 14420 },
+        { "code": "LT-110", "pe": 110, "orientation": "horizontal", "width": 2300, "length": 4000, "height": 2500, "waterLevel": 1900, "capacityL": 17480 },
+        { "code": "LT-130", "pe": 130, "orientation": "horizontal", "width": 2300, "length": 4700, "height": 2500, "waterLevel": 1900, "capacityL": 20540 },
+        { "code": "LT-150", "pe": 150, "orientation": "horizontal", "width": 2300, "length": 5400, "height": 2500, "waterLevel": 1900, "capacityL": 23600 }
+      ]
+    }
+  ]
+}

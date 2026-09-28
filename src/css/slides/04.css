@@ -1,0 +1,168 @@
+/* Sheet 04 — One range, 6 to 150 PE. Styles owned by this sheet's author only.
+   Scoped under .s04 (the section's own class). */
+
+/* The measured scale is the sheet's drawing: larger row labels, a view title. */
+.s04 .s04-scale {
+  display: grid;
+  gap: var(--s-5);
+  padding-inline: 1rem 1.25rem;
+}
+
+.s04 .s04-scale .rs-name { font-size: 12px; }
+.s04 .s04-scale .rs-val { font-size: 18px; }
+.s04 .s04-scale .rs-tick-label { font-size: 11px; }
+
+.s04 .s04-scale-title {
+  margin-inline-start: -1rem;
+}
+
+/* Model stations: open cyan circles on each series' dimension line. */
+.s04 .s04-station {
+  fill: var(--ms-ground);
+  stroke: var(--cyan);
+  stroke-width: 1.25;
+}
+
+/* 31-39 PE reach of LT-40: a dashed continuation of the LT dimension. */
+.s04 .s04-reach {
+  stroke: var(--cyan);
+  stroke-width: 1;
+  stroke-dasharray: 3 4;
+}
+
+.s04 .s04-reach-val {
+  fill: var(--cyan);
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+}
+
+/* Series comparison: series across, properties down. Cells wrap so the
+   table fits the side column without sideways scroll on desktop. */
+.s04 .s04-compare {
+  table-layout: fixed;
+}
+
+.s04 .s04-compare thead th {
+  padding-block-end: 0.5rem;
+  color: var(--ink);
+  font-family: var(--font-display);
+  font-size: 0.9375rem;
+  font-weight: 620;
+  font-stretch: 86%;
+  letter-spacing: 0;
+  line-height: 1.1;
+  text-transform: none;
+  white-space: normal;
+}
+
+.s04 .s04-compare thead td {
+  inline-size: 5.75rem;
+}
+
+.s04 .s04-compare tbody :is(th, td) {
+  padding-block: 0.5rem;
+  vertical-align: top;
+  white-space: normal;
+}
+
+.s04 .s04-compare tbody th {
+  color: var(--ink-3);
+  font-family: var(--font-data);
+  font-size: var(--fs-label);
+  font-weight: 400;
+  font-stretch: 100%;
+  letter-spacing: 0.1em;
+  line-height: 1.6;
+  text-transform: uppercase;
+}
+
+.s04 .s04-compare tbody td {
+  color: var(--ink);
+  font-size: 0.78125rem;
+  line-height: 1.35;
+}
+
+.s04 .s04-dim {
+  color: var(--cyan);
+  font-family: var(--font-display);
+  font-size: 1.125rem;
+  font-weight: 640;
+  font-stretch: 86%;
+  line-height: 1;
+}
+
+.s04 .s04-notes li {
+  max-inline-size: 64ch;
+}
+
+.s04 .s04-after {
+  display: grid;
+  gap: var(--s-4);
+  justify-items: start;
+}
+
+.s04 .s04-cta {
+  margin: 0;
+}
+
+.s04 .s04-cta .ico {
+  inline-size: 16px;
+  block-size: 16px;
+}
+
+/* Laptop heights: tighter rhythm, the reading notes in two columns, so the
+   sheet fits one 800 px screen with the title block clear. */
+@media (min-width: 721px) and (max-height: 820px) {
+  .s04 :is(.sheet-main, .sheet-side) { gap: var(--s-5); }
+  .s04 .s04-scale { gap: var(--s-4); }
+
+  .s04 .s04-notes .notes-title { padding-block-end: var(--s-3); }
+
+  .s04 .s04-notes ol {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    column-gap: var(--s-6);
+  }
+
+  .s04 .s04-compare tbody :is(th, td) { padding-block: 0.375rem; }
+}
+
+/* Phones: the scale drops the model stations (too dense at 358 px); the
+   comparison squeezes to the width instead of hiding a column off-screen. */
+@media (max-width: 720px) {
+  .s04 .s04-scale {
+    padding-inline: 0.5rem 0.75rem;
+  }
+
+  .s04 .s04-scale .rs-name { font-size: 11px; }
+  .s04 .s04-scale .rs-val { font-size: 15px; }
+
+  .s04 .s04-scale-title {
+    margin-inline-start: -0.5rem;
+  }
+
+  .s04 .s04-station,
+  .s04 .s04-stations-note {
+    display: none;
+  }
+
+  .s04 .s04-compare thead td {
+    inline-size: 5.75rem;
+  }
+
+  .s04 .s04-compare tbody th {
+    letter-spacing: 0.06em;
+  }
+
+  .s04 .s04-compare thead th {
+    font-size: 0.875rem;
+  }
+
+  .s04 .s04-compare tbody td {
+    font-size: 0.75rem;
+  }
+}
+
+.s04 .s04-nobr {
+  white-space: nowrap;
+}

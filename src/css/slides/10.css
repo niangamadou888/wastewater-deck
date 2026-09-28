@@ -1,0 +1,379 @@
+/* Sheet 10 — Find your model. Styles owned by this sheet's author only.
+   Scoped under .s10 (the section's own class).
+
+   Desktop: the sheet's own grid. Title and input on the left, the live
+   section in the middle, the result card in the title-block column (it stops
+   above the title block), the measured PE scale across the foot. Phones: one
+   column in reading order: title, input, result, section, scale. */
+
+.s10 .s10-grid {
+  display: grid;
+  grid-template-columns: minmax(0, 19rem) minmax(0, 1fr) calc(var(--tb-w) - var(--gutter));
+  grid-template-rows: auto auto minmax(0, 1fr);
+  grid-template-areas:
+    "head  head  side"
+    "form  live  side"
+    "form  scale side";
+  gap: var(--s-5) var(--gutter);
+  min-height: calc(100dvh - var(--sheet-pad-top) - var(--frame) - var(--s-5));
+}
+
+.s10 .s10-head { grid-area: head; }
+.s10 .s10-form {
+  grid-area: form;
+  grid-template-columns: minmax(0, 1fr);
+  align-self: start;
+  gap: var(--s-5);
+}
+.s10 .s10-live { grid-area: live; align-self: start; }
+.s10 .s10-scale { grid-area: scale; align-self: end; padding-inline: 0.25rem 1.75rem; }
+
+.s10 .s10-side {
+  grid-area: side;
+  align-self: start;
+  display: grid;
+  gap: var(--s-5);
+  padding-block-end: var(--tb-h);
+}
+
+/* ---- input ------------------------------------------------------------------ */
+
+.s10 .pe-help { margin-block-start: var(--s-2); }
+
+/* The sheet opens on an authored example PE (live-drawing.js marks the
+   drawing data-example while the field still holds it): the help line says
+   so, and switches to the plain rule once the visitor types their own. */
+.s10 .s10-help-example b { color: var(--ink-2); font-weight: 700; }
+.s10 .s10-help-own { display: none; }
+.s10:has([data-live-drawing]:not([data-example])) .s10-help-example { display: none; }
+.s10:has([data-live-drawing]:not([data-example])) .s10-help-own { display: inline; }
+
+/* A filled PE keeps a visible entry box, so the example reads as editable. */
+.s10 .pe-input input:not(:placeholder-shown) {
+  border-style: solid;
+  border-color: var(--line-2);
+  cursor: text;
+}
+.s10 .pe-input:hover input:not(:placeholder-shown) { border-color: var(--cyan); }
+
+/* Result peek: phones only (see the phone block), where the result card is
+   far below the input. */
+.s10 .s10-peek { display: none; }
+
+.s10 .s10-actions {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: flex-start;
+  gap: var(--s-3);
+}
+
+/* ---- result card: compact enough to stay above the title block ------------- */
+
+.s10 .result {
+  gap: 0.625rem;
+  padding: var(--s-4) var(--s-5) var(--s-5);
+}
+
+.s10 .result-model { font-size: clamp(2.25rem, 1.7rem + 1.6vw, 2.875rem); }
+.s10 .result-series { margin-block-start: -2px; font-size: 0.8125rem; line-height: 1.4; }
+
+/* Every dimension on one row, the drawing letter above its field label. */
+.s10 .result-dims {
+  grid-template-columns: none;
+  grid-auto-columns: minmax(0, 1fr);
+  grid-auto-flow: column;
+}
+
+.s10 .result-dims > div {
+  display: grid;
+  align-content: space-between;
+  gap: 3px;
+  padding: 0.375rem 0.5rem 0.4375rem;
+}
+
+.s10 .result-dims dt { margin: 0; }
+
+.s10 .result-dims .sym {
+  display: block;
+  margin: 0 0 1px;
+  font-size: 0.75rem;
+}
+
+.s10 .result-dims dd { font-size: 0.9375rem; }
+
+.s10 .result .notes-title {
+  margin-block-end: 0;
+  padding-block-end: 0.625rem;
+}
+
+.s10 .result .notes ol { gap: 2px; }
+
+.s10 .result :is(.notes li, .warn) {
+  font-size: 0.78125rem;
+  line-height: 1.42;
+}
+
+.s10 .result > p { margin-block-start: 0; }
+.s10 .result > .result-actions { margin-block-start: 2px; }
+.s10 .result-actions .btn-cell { padding-block: 0.4375rem 0.5rem; }
+.s10 .result-disclaimer { font-size: var(--fs-micro); line-height: 1.42; }
+
+.s10 .s10-rules li { max-inline-size: none; }
+
+/* ---- live section --------------------------------------------------------------
+   Contract with src/js/lib/tank-layout.js: the engine always draws a fixed
+   480 x 352 viewBox, with every model's geometry and annotation inside it,
+   so the box shows the whole viewBox at that aspect and never crops. */
+
+.s10 .s10-live { gap: var(--s-4); }
+
+.s10 .s10-live-box {
+  position: relative;
+  aspect-ratio: 480 / 352;
+}
+
+.s10 [data-live-drawing] {
+  position: absolute;
+  inset: 0;
+}
+
+.s10 [data-live-drawing] > svg {
+  inline-size: 100%;
+  block-size: 100%;
+}
+
+/* Drawing text, in viewBox units: scaled up where the section is drawn small
+   so it stays near 11 CSS px. Never above TEXT_SIZE in tank-layout.js (15 /
+   15.5 / 16), which the engine lays every label out for. A ground-coloured
+   halo is the CAD wipeout: no line ever strikes through a label. */
+.s10 [data-live-drawing] .ly-note { font-size: 12.5px; }
+.s10 [data-live-drawing] .ly-label-long { font-size: 14px; }
+.s10 [data-live-drawing] .ly-dim-text { font-size: 14.5px; }
+.s10 [data-live-drawing] text {
+  paint-order: stroke;
+  stroke: var(--ms-ground);
+  stroke-width: 3px;
+  stroke-linejoin: round;
+}
+
+/* No model for the PE entered: the last section stays as a ghost under the
+   note, so the sheet is still a drawing (live-drawing.js). */
+.s10 [data-live-drawing][data-state="ghost"] > svg { opacity: 0.2; }
+.s10 [data-live-drawing][data-state="ghost"] .ly-flow { animation: none; }
+
+.s10 [data-live-drawing]:empty {
+  outline: 1px dashed var(--line-2);
+  outline-offset: -1px;
+  background: var(--xref-missing) 0 0 / 100% 100% no-repeat;
+}
+
+.s10 .s10-live-empty {
+  position: absolute;
+  inset: 0;
+  display: grid;
+  place-items: center;
+  max-inline-size: none;
+  pointer-events: none;
+}
+
+.s10 [data-live-drawing]:not(:empty) + .s10-live-empty { display: none; }
+.s10 [data-live-drawing][data-state="ghost"] + .s10-live-empty { display: grid; }
+
+/* ---- measured PE scale ------------------------------------------------------ */
+
+.s10 .s10-scale .rs-name { font-size: 11px; }
+.s10 .s10-scale .rs-val { font-size: 15px; }
+.s10 .s10-scale .rs-tick-label { font-size: 11px; }
+.s10 .s10-scale .rs-marker text { font-size: 13px; }
+
+/* Where the moving marker line crosses a series name or a tick label, the
+   label masks it (a CAD wipeout): the line never strikes through text. */
+.s10 .s10-scale svg.rs :is(.rs-range text, .rs-tick-label, .rs-unit) { stroke-width: 9px; }
+
+/* Parked at 0 with no PE entered: hide the marker instead of drawing a cyan
+   line that means nothing. */
+.s10 .rs-marker:has(text:empty) line { opacity: 0; }
+
+/* ---- all-models schedule (engine-filled table) --------------------------------- */
+
+.s10 .s10-matrix { min-inline-size: 0; }
+
+.s10 .s10-matrix > summary {
+  list-style: none;
+  cursor: pointer;
+}
+
+.s10 .s10-matrix > summary::-webkit-details-marker { display: none; }
+
+.s10 .s10-matrix[open] > summary {
+  border-color: var(--cyan);
+  color: var(--cyan);
+}
+
+.s10 .s10-matrix-panel {
+  margin-block-start: var(--s-3);
+}
+
+.s10 .s10-matrix .schedule { font-size: 0.75rem; }
+
+.s10 .s10-matrix .schedule :is(thead, tbody) :is(th, td):first-child {
+  position: static;
+  border-inline-end: 0;
+}
+
+.s10 .s10-matrix tbody td:first-child {
+  color: var(--ink-3);
+  font-size: 0.6875rem;
+}
+
+.s10 .s10-matrix tbody td:nth-child(2) {
+  color: var(--ink);
+  font-family: var(--font-display);
+  font-size: 0.9375rem;
+  font-weight: 600;
+  font-stretch: 88%;
+}
+
+.s10 .s10-matrix tbody td:nth-child(3),
+.s10 .s10-matrix tbody td:nth-child(n + 5) {
+  text-align: end;
+}
+
+.s10 .s10-matrix tbody td:nth-child(4) {
+  color: var(--ink-2);
+  text-transform: capitalize;
+}
+
+/* Desktop: the schedule opens as a panel over the input column instead of
+   pushing the sheet into a page scroll. The selection rules teach the logic
+   while there is no model; a result takes their place in the side column. */
+@media (min-width: 1101px) {
+  .s10 .s10-side:has(> .result[data-status="ok"]) > .s10-rules { display: none; }
+  .s10 .s10-matrix { position: relative; }
+
+  .s10 .s10-matrix[open] > .s10-matrix-panel {
+    position: absolute;
+    z-index: 5;
+    inset-block-end: calc(100% + var(--s-3));
+    inset-inline-start: 0;
+    inline-size: calc(100vw - 2 * var(--sheet-pad) - var(--tb-w));
+    max-inline-size: none;
+    max-block-size: min(32rem, calc(100dvh - 22rem));
+    margin: 0;
+    padding: var(--s-4) var(--s-5) var(--s-3);
+    overflow: auto;
+    border: 1.5px solid var(--ink);
+    background: var(--ms-ground);
+    box-shadow: 0 18px 40px rgb(8 10 14 / 0.55);
+  }
+
+  .s10 .s10-matrix thead th {
+    position: sticky;
+    inset-block-start: calc(-1 * var(--s-4));
+    z-index: 2;
+    background: var(--ms-ground);
+  }
+}
+
+/* ---- laptops: a narrower input column gives the live section more room ------- */
+
+@media (min-width: 1101px) and (max-width: 1365px) {
+  .s10 .s10-grid {
+    grid-template-columns: minmax(0, 17rem) minmax(0, 1fr) calc(var(--tb-w) - var(--gutter));
+  }
+
+  .s10 [data-live-drawing] .ly-note { font-size: 14.5px; }
+  .s10 [data-live-drawing] .ly-label-long { font-size: 15px; }
+  .s10 [data-live-drawing] .ly-dim-text { font-size: 15.5px; }
+}
+
+/* ---- mid widths: input beside the result, drawing and scale below ------------ */
+
+@media (max-width: 1100px) {
+  .s10 .s10-grid {
+    grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+    grid-template-rows: none;
+    grid-template-areas:
+      "head  head"
+      "form  side"
+      "live  live"
+      "scale scale";
+    row-gap: var(--s-6);
+    min-height: 0;
+    padding-block-end: calc(var(--tb-h) + var(--s-5));
+  }
+
+  .s10 .s10-side { padding-block-end: 0; }
+  .s10 .s10-live { max-inline-size: 40rem; }
+}
+
+/* ---- phones: one column, reading order ------------------------------------------
+   PE in, then the model's section straight under it (in the first screen),
+   then the site conditions and the full result. The form's box steps aside
+   (display: contents) so its parts can take their own rows. */
+
+@media (max-width: 720px) {
+  .s10 .s10-grid {
+    grid-template-columns: minmax(0, 1fr);
+    grid-template-areas: "head" "pe" "live" "toggles" "actions" "side" "scale";
+    row-gap: var(--s-6);
+    padding-block-end: 0;
+  }
+
+  .s10 .s10-form { display: contents; }
+  .s10 .pe-field { grid-area: pe; }
+  .s10 .toggles { grid-area: toggles; }
+  .s10 .s10-actions { grid-area: actions; }
+
+  .s10 .s10-peek {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: var(--s-3);
+    inline-size: 100%;
+    max-inline-size: none;
+    margin-block-start: var(--s-3);
+    padding: var(--s-2) var(--s-2) var(--s-2) var(--s-4);
+    border: 1px solid var(--cyan);
+    background: var(--chosen-bg);
+  }
+
+  .s10 .s10-peek:is([data-status="invalid"], [data-status="out-of-range"]) {
+    border-color: var(--line-2);
+    background: none;
+  }
+
+  .s10 .s10-peek-text { display: grid; gap: 2px; min-inline-size: 0; }
+
+  .s10 .s10-peek-model {
+    color: var(--cyan);
+    font-family: var(--font-display);
+    font-size: 1.5rem;
+    font-weight: 700;
+    font-stretch: 72%;
+    line-height: 1;
+  }
+
+  .s10 .s10-peek-model:empty { display: none; }
+  .s10 .s10-peek-detail { color: var(--ink-2); font-size: 0.8125rem; line-height: 1.35; }
+  .s10 .s10-peek-go { flex: none; padding-inline: 0.75rem; }
+  .s10 .s10-peek-go .ico { inline-size: 16px; block-size: 16px; }
+
+  .s10 .s10-actions > .btn { flex: 1 1 auto; }
+  .s10 .s10-matrix { flex: 1 1 100%; }
+  .s10 .s10-matrix > summary { inline-size: 100%; }
+  .s10 .result-dims {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    grid-auto-flow: row;
+  }
+  .s10 .s10-scale { padding-inline: 0.25rem 1.5rem; }
+  .s10 .s10-scale .rs-name { font-size: 11px; }
+  .s10 .s10-scale .rs-val { font-size: 13px; }
+
+  /* The section renders at about 75% on a phone: its notes stay on (drawing.css
+     hides notes on other sheets' phone drawings) at sizes near 11 CSS px. */
+  .s10 [data-live-drawing] :is(.ly-note, .ly-label-long) { display: inline; }
+  .s10 [data-live-drawing] .ly-note { font-size: 15px; }
+  .s10 [data-live-drawing] .ly-label-long { font-size: 15.5px; }
+  .s10 [data-live-drawing] .ly-dim-text { font-size: 16px; }
+}
